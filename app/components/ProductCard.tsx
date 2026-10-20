@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, Plus, Star } from "lucide-react";
 import type { Product } from "../types";
+import { formatCurrency, getDiscountPercentage } from "@/lib/formatters";
 
 interface ProductCardProps {
   product: Product;
@@ -18,21 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [liked, setLiked] = useState(false);
 
-  const discountPercent =
-    product.price !== null &&
-      product.originalPrice &&
-      product.originalPrice > product.price
-      ? Math.round(
-        ((product.originalPrice - product.price) /
-          product.originalPrice) *
-        100
-      )
-      : null;
-
-  const priceFormatter = new Intl.NumberFormat("el-GR", {
-    style: "currency",
-    currency: "EUR",
-  });
+  const discountPercent = getDiscountPercentage(product.price, product.originalPrice);
 
   const canAdd =
     product.price !== null &&
@@ -88,7 +75,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
 
         <h3 className="mt-1 text-[13px] font-medium leading-snug text-ink-800 line-clamp-2 min-h-[2.5rem]">
-          {product.name}
+          {product.slug ? (
+            <Link
+              href={`/products/${product.slug}`}
+              className="hover:text-brand-700 transition-colors"
+            >
+              {product.name}
+            </Link>
+          ) : (
+            product.name
+          )}
         </h3>
 
         <div className="mt-2 flex items-center gap-1 text-[11px] text-ink-500">
@@ -110,14 +106,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="mt-auto pt-3 flex items-end justify-between gap-2">
           <div className="leading-tight">
             <span className="block font-display text-lg font-extrabold text-ink-900">
-              {product.price === null
-                ? "Τιμή μη διαθέσιμη"
-                : priceFormatter.format(product.price)}
+              {formatCurrency(product.price)}
             </span>
 
             {product.originalPrice !== undefined && (
               <span className="text-xs text-ink-400 line-through">
-                {priceFormatter.format(product.originalPrice)}
+                {formatCurrency(product.originalPrice)}
               </span>
             )}
           </div>

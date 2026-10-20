@@ -11,6 +11,9 @@ export interface Product {
   purchasable?: boolean;
   productType?: string;
   slug?: string;
+  onSale?: boolean;
+  categories?: { name: string; slug: string }[];
+  brandSlug?: string;
 }
 
 export interface CategoryGroup {

@@ -89,6 +89,38 @@ export async function getWooProducts(): Promise<WooProduct[]> {
     return response.json();
 }
 
+/**
+ * Fetches the full catalogue from the WooCommerce Store API, page by page
+ * (max 100 per page). Capped by `maxPages` to keep builds fast.
+ */
+export async function getAllWooProducts(maxPages = 5): Promise<WooProduct[]> {
+    if (!baseUrl) {
+        throw new Error("Missing WOOCOMMERCE_URL");
+    }
+
+    const all: WooProduct[] = [];
+    let page = 1;
+    let totalPages = 1;
+
+    do {
+        const response = await fetch(
+            `${baseUrl}/wp-json/wc/store/v1/products?per_page=100&page=${page}`,
+            { next: { revalidate: 60 } }
+        );
+
+        if (!response.ok) {
+            throw new Error(`WooCommerce API error: ${response.status}`);
+        }
+
+        totalPages = Number(response.headers.get("X-WP-TotalPages")) || 1;
+        const batch: WooProduct[] = await response.json();
+        all.push(...batch);
+        page++;
+    } while (page <= totalPages && page <= maxPages);
+
+    return all;
+}
+
 
 
 export async function getWooProductBySlug(
@@ -109,11 +141,9 @@ export async function getWooProductBySlug(
     const url =
         `${baseUrl}/wp-json/wc/store/v1/products/${encodeURIComponent(normalizedSlug)}?_embed`;
 
-    console.log("[WooCommerce] Fetching:", url);
 
     const response = await fetch(url);
 
-    console.log("[WooCommerce] Status:", response.status);
 
     if (response.status === 404) {
         return null;
@@ -149,7 +179,6 @@ export async function getWooProductBySlug(
         product._embedded?.related?.[0] ||
         [];
 
-    console.log("[WooCommerce] Found product:", product.name, "with linked:", product.linked_products.length);
 
     return product;
 }

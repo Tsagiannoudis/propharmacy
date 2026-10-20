@@ -24,15 +24,18 @@ const navItems = [
   { label: "Πρόσωπο", href: "/#face" },
   { label: "Μαλλιά", href: "/#hair" },
   { label: "Σώμα", href: "/#body" },
-  { label: "Μαμά & Παιδί", href: "/guides/baby-care" },
-  { label: "Βιταμίνες", href: "/guides/vitamins-supplements" },
+  { label: "Γονείς & Παιδιά", href: "/#baby-care" },
+  { label: "Βιταμίνες & Συμπληρώματα", href: "/#vitamins-supplements" },
   { label: "Φαρμακείο", href: "/#pharmacy" },
 ];
 
 const announcements = [
-  { icon: Truck, text: "Δωρεάν αποστολή για αγορές άνω των 39€" },
-  { icon: ShieldCheck, text: "100% γνήσια προϊόντα από επίσημους αντιπροσώπους" },
-  { icon: Stethoscope, text: "Δωρεάν συμβουλή φαρμακοποιού · 210 1234567" },
+  { icon: Truck, text: "Δωρεάν αποστολή για αγορές άνω των 49€" },
+  {
+    icon: ShieldCheck,
+    text: "100% γνήσια προϊόντα από επίσημους αντιπροσώπους",
+  },
+  { icon: Stethoscope, text: "Δωρεάν συμβουλή φαρμακοποιού · 200 1234567" },
   { icon: Gift, text: "Δώρο δείγματα σε κάθε παραγγελία" },
 ];
 
@@ -56,7 +59,10 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
           {[...announcements, ...announcements].map((a, i) => {
             const Icon = a.icon;
             return (
-              <span key={i} className="flex items-center gap-2 px-8 whitespace-nowrap">
+              <span
+                key={i}
+                className="flex items-center gap-2 px-8 whitespace-nowrap"
+              >
                 <Icon className="w-3.5 h-3.5 text-brand-400" />
                 {a.text}
               </span>
@@ -77,7 +83,11 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
           }`}
         >
           {/* Logo */}
-          <Link href="/" id="logo-link" className="flex items-center gap-2.5 shrink-0 group">
+          <Link
+            href="/"
+            id="logo-link"
+            className="flex items-center gap-2.5 shrink-0 group"
+          >
             <span className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-700 grid place-items-center shadow-lift group-hover:rotate-6 transition-transform duration-300">
               <span className="absolute w-5 h-1.5 rounded-full bg-white" />
               <span className="absolute w-1.5 h-5 rounded-full bg-white" />
@@ -128,7 +138,9 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
               className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-full text-ink-700 hover:bg-ink-50 transition-colors"
             >
               <User className="w-5 h-5" />
-              <span className="text-sm font-medium hidden lg:inline">Σύνδεση</span>
+              <span className="text-sm font-medium hidden lg:inline">
+                Σύνδεση
+              </span>
             </button>
             <button
               id="header-wishlist"
@@ -143,11 +155,15 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
               className="relative flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-ink-900 hover:bg-brand-700 text-white transition-colors"
             >
               <ShoppingBag className="w-4.5 h-4.5" />
-              <span className="text-sm font-semibold hidden sm:inline">Καλάθι</span>
+              <span className="text-sm font-semibold hidden sm:inline">
+                Καλάθι
+              </span>
               <span
                 key={cartCount}
                 className={`min-w-5 h-5 px-1 rounded-full text-[11px] font-bold grid place-items-center ${
-                  cartCount > 0 ? "bg-brand-400 text-ink-950 animate-pulse-ring" : "bg-white/15"
+                  cartCount > 0
+                    ? "bg-brand-400 text-ink-950 animate-pulse-ring"
+                    : "bg-white/15"
                 }`}
               >
                 {cartCount}
@@ -159,13 +175,19 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
               className="lg:hidden w-10 h-10 grid place-items-center rounded-full text-ink-700 hover:bg-ink-50"
               aria-label="Μενού"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
 
         {/* Desktop nav */}
-        <nav className={`hidden lg:block transition-all duration-300 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}>
+        <nav
+          className={`hidden lg:block transition-all duration-300 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}
+        >
           <div className="container-page flex items-center justify-between pb-3">
             <ul className="flex items-center gap-1">
               {navItems.map((item) => (

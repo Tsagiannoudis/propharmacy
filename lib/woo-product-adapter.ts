@@ -18,6 +18,15 @@ function decodeHtml(value: string): string {
         .replace(/&nbsp;/g, " ");
 }
 
+function safeEncodeURI(uri: string): string {
+    if (!uri) return uri;
+    try {
+        return encodeURI(decodeURI(uri));
+    } catch {
+        return encodeURI(uri);
+    }
+}
+
 export function mapWooProduct(woo: WooProduct): Product {
     const divisor = 10 ** woo.prices.currency_minor_unit;
 
@@ -33,6 +42,8 @@ export function mapWooProduct(woo: WooProduct): Product {
         regularValue !== ""
             ? Number(regularValue) / divisor
             : null;
+
+    const rawImage = woo.images?.[0]?.src;
 
     return {
         id: woo.id,
@@ -55,7 +66,7 @@ export function mapWooProduct(woo: WooProduct): Product {
                 regularPrice > price
                 ? regularPrice
                 : undefined,
-        image: woo.images?.[0]?.src || "/placeholder.png",
+        image: rawImage ? safeEncodeURI(rawImage) : "/placeholder.png",
         inStock: woo.is_in_stock,
         purchasable: woo.is_purchasable,
         productType: woo.type,

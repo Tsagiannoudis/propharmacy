@@ -127,6 +127,22 @@ export async function getWooProductBySlug(
 
     const product: WooProduct = await response.json();
 
+    if (Array.isArray(product.images)) {
+        product.images = product.images.map((img) => {
+            try {
+                return {
+                    ...img,
+                    src: encodeURI(decodeURI(img.src)),
+                };
+            } catch {
+                return {
+                    ...img,
+                    src: encodeURI(img.src),
+                };
+            }
+        });
+    }
+
     // Map linked products (upsells or related products from WooCommerce)
     product.linked_products =
         product._embedded?.upsells?.[0] ||

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/components/cart/CartProvider";
 import {
   Search,
   ShoppingBag,
@@ -39,7 +40,9 @@ const announcements = [
   { icon: Gift, text: "Δώρο δείγματα σε κάθε παραγγελία" },
 ];
 
-export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
+export const Header: React.FC<HeaderProps> = () => {
+  const { cart } = useCart();
+  const cartCount = cart?.items_count ?? 0;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
@@ -150,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0 }) => {
               <Heart className="w-5 h-5" />
             </button>
             <Link
-              href="#cart"
+              href="/cart"
               id="header-cart"
               className="relative flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-ink-900 hover:bg-brand-700 text-white transition-colors"
             >

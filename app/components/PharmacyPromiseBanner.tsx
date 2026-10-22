@@ -1,6 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { FlaskConical, Stethoscope, Lock, BadgeCheck, MessageCircle, ArrowRight } from "lucide-react";
+import {
+  FlaskConical,
+  Stethoscope,
+  Lock,
+  BadgeCheck,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
 
 const pillars = [
   {
@@ -40,8 +47,8 @@ export const PharmacyPromiseBanner: React.FC = () => {
               <br /> ένα μήνυμα μακριά.
             </h2>
             <p className="mt-4 text-brand-100 max-w-sm leading-relaxed">
-              Εξατομικευμένες συμβουλές για δέρμα, διατροφή και υγεία από πιστοποιημένους
-              φαρμακοποιούς – δωρεάν.
+              Εξατομικευμένες συμβουλές για δέρμα, διατροφή και υγεία από
+              πιστοποιημένους φαρμακοποιούς – δωρεάν.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -51,7 +58,10 @@ export const PharmacyPromiseBanner: React.FC = () => {
               >
                 <MessageCircle className="w-4 h-4" /> Ξεκίνα συνομιλία
               </Link>
-              <a href="tel:2101234567" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 font-semibold hover:bg-white/10 transition-colors">
+              <a
+                href="tel:2101234567"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 font-semibold hover:bg-white/10 transition-colors"
+              >
                 210 1234567
               </a>
             </div>
@@ -69,8 +79,12 @@ export const PharmacyPromiseBanner: React.FC = () => {
                   <span className="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 grid place-items-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
                     <Icon className="w-5.5 h-5.5" />
                   </span>
-                  <h3 className="mt-5 text-base font-bold text-ink-900">{p.title}</h3>
-                  <p className="mt-2 text-sm text-ink-500 leading-relaxed">{p.desc}</p>
+                  <h3 className="mt-5 text-base font-bold text-ink-900">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-ink-500 leading-relaxed">
+                    {p.desc}
+                  </p>
                 </div>
               );
             })}
@@ -79,11 +93,13 @@ export const PharmacyPromiseBanner: React.FC = () => {
               <div className="pointer-events-none absolute inset-0 bg-dots opacity-40" />
               {[
                 { k: "12k+", v: "Προϊόντα" },
-                { k: "150k", v: "Ευχαριστημένοι πελάτες" },
-                { k: "24h", v: "Μέση παράδοση" },
+                { k: "110k", v: "Ευχαριστημένοι πελάτες" },
+                { k: "36h", v: "Μέση παράδοση" },
               ].map((s) => (
                 <div key={s.v} className="relative">
-                  <p className="font-display text-3xl sm:text-4xl font-extrabold text-gradient">{s.k}</p>
+                  <p className="font-display text-3xl sm:text-4xl font-extrabold text-gradient">
+                    {s.k}
+                  </p>
                   <p className="mt-1 text-xs sm:text-sm text-ink-300">{s.v}</p>
                 </div>
               ))}

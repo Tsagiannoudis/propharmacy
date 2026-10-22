@@ -2,45 +2,39 @@ import { Product, CategoryGroup, QuickCategory } from "../types";
 
 export const quickCategories: QuickCategory[] = [
   {
+    id: "body",
+    title: "Σώμα",
+    image: "/categories/gia-to-swma-banner-category.webp",
+    href: "/shop?category=body",
+  },
+  {
     id: "face",
     title: "Πρόσωπο",
-    image:
-      "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80",
+    image: "/categories/gia-to-prosopo-banner-category.webp",
     href: "/shop?category=face",
   },
   {
     id: "hair",
     title: "Μαλλιά",
-    image:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+    image: "/categories/gia-ta-mallia-banner-category.webp",
     href: "/shop?category=hair",
-  },
-  {
-    id: "body",
-    title: "Σώμα",
-    image:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80",
-    href: "/shop?category=body",
   },
   {
     id: "baby",
     title: "Παιδί, Μαμάδα",
-    image:
-      "https://images.unsplash.com/photo-1555252333-978fead06c00?auto=format&fit=crop&w=600&q=80",
+    image: "/categories/goneis-kai-paidia-banner.webp",
     href: "/shop?category=baby",
   },
   {
     id: "supplements",
     title: "Συμπληρώματα",
-    image:
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
+    image: "/categories/sumpliromata-vitamines-banner.webp",
     href: "/shop?category=supplements",
   },
   {
     id: "pharmacy",
     title: "Φαρμακείο",
-    image:
-      "https://images.unsplash.com/photo-1586015555751-63bb77f4322a?auto=format&fit=crop&w=600&q=80",
+    image: "/categories/pharmacy-banner-1.webp",
     href: "/shop?category=pharmacy",
   },
 ];
@@ -50,8 +44,7 @@ export const topPicksCategoryGroups: CategoryGroup[] = [
     id: "face",
     title: "Πρόσωπο",
     headerBg: "bg-sky-400 text-white",
-    headerImage:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    headerImage: "/categories/gia-to-prosopo-banner-1.webp",
     link: "#face",
     products: [
       {
@@ -100,8 +93,7 @@ export const topPicksCategoryGroups: CategoryGroup[] = [
     id: "body",
     title: "Σώμα",
     headerBg: "bg-lime-400 text-white",
-    headerImage:
-      "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=400&q=80",
+    headerImage: "/categories/gia-to-swma-banner-1.webp",
     link: "#body",
     products: [
       {
@@ -250,8 +242,7 @@ export const topPicksCategoryGroups: CategoryGroup[] = [
     id: "supplements",
     title: "Συμπληρώματα",
     headerBg: "bg-stone-500 text-white",
-    headerImage:
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+    headerImage: "/categories/supliromata-banner-1.webp",
     link: "#supplements",
     products: [
       {

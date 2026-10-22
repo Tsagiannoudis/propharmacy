@@ -2,6 +2,8 @@
 
 import { Check, ShieldCheck, ShoppingBag, Minus, Plus } from "lucide-react";
 import type { WooProduct } from "@/lib/woocommerce";
+import { useCart } from "@/components/cart/CartProvider";
+import { useState } from "react";
 import { decodeHtml, formatCurrency } from "@/lib/formatters";
 import type { ProductSelectionState } from "./selection-types";
 
@@ -20,6 +22,21 @@ export default function OrderSummary({ product, quantity, onQuantityChange, sele
   const linkedProducts = product.linked_products ?? [];
   const selectedLinkedProduct = linkedProducts.find((p) => p.id === selectedLinkedProductId);
   const giftWrapPrice = isGiftWrap ? 1.5 : 0;
+  const { addItem, busy } = useCart();
+  const [adding, setAdding] = useState(false);
+  const [cartError, setCartError] = useState<string | null>(null);
+  // Custom attributes, add-ons and gift wrap must have a real WooCommerce
+  // price/inventory implementation before purchase can be enabled.
+  const canAdd = product.type === "simple" && product.is_purchasable && product.is_in_stock
+    && basePrice !== null && basePrice > 0 && !isGiftWrap && !selectedLinkedProductId
+    && selectableAttributes.length === 0;
+  const handleAdd = async () => {
+    if (!canAdd) return;
+    setAdding(true); setCartError(null);
+    try { await addItem(product.id, quantity); }
+    catch(e) { setCartError(e instanceof Error ? e.message : "Σφάλμα WooCommerce"); }
+    finally { setAdding(false); }
+  };
 
   return (
           <div className="space-y-4 lg:sticky lg:top-24">
@@ -167,8 +184,9 @@ export default function OrderSummary({ product, quantity, onQuantityChange, sele
 
               <button
                 type="button"
-                disabled
-                title="Το πραγματικό καλάθι WooCommerce δεν έχει συνδεθεί ακόμη"
+                disabled={!canAdd || busy || adding}
+                onClick={() => void handleAdd()}
+                title={!canAdd ? "Απενεργοποίησε τη συσκευασία δώρου και τις πρόσθετες επιλογές για να προσθέσεις το απλό προϊόν" : "Προσθήκη στο WooCommerce"}
                 className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-800 py-4 text-sm font-semibold text-white shadow-md shadow-brand-900/20 transition hover:bg-brand-900 active:scale-[0.99] disabled:opacity-50"
               >
                 <ShoppingBag
@@ -177,6 +195,8 @@ export default function OrderSummary({ product, quantity, onQuantityChange, sele
                 />
                 <span>Προσθήκη στο καλάθι</span>
               </button>
+              {cartError && <p role="alert" className="text-xs text-red-600">{cartError}</p>}
+              {!canAdd && <p className="text-xs text-ink-500">Η αγορά με πρόσθετες επιλογές θα ενεργοποιηθεί όταν συνδεθούν με πραγματικές χρεώσεις WooCommerce.</p>}
             </div>
 
             <div className="flex items-center justify-center gap-2 text-[11px] text-ink-500">

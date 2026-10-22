@@ -20,7 +20,7 @@ export interface BuyingGuideDetail {
   introHeading: string;
   introText: string;
   sections?: GuideSection[];
-  
+
   // Specific sections for Baby care
   calloutBox?: {
     badge: string;
@@ -44,7 +44,8 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
     slug: "baby-care",
     title: "Οδηγός Βρεφικής Φροντίδας",
     breadcrumb: "Οδηγός Βρεφικής Φροντίδας",
-    featuredImage: "https://images.unsplash.com/photo-1555252333-978fead06c00?auto=format&fit=crop&w=1000&q=80",
+    featuredImage:
+      "https://images.unsplash.com/photo-1555252333-978fead06c00?auto=format&fit=crop&w=1000&q=80",
     introHeading: "Οδηγός Βρεφικής Φροντίδας",
     introText:
       "Η φροντίδα ενός βρέφους είναι μια μοναδική και προκλητική εμπειρία που απαιτεί αγάπη, υπομονή και σωστές γνώσεις. Αυτός ο οδηγός έχει ως στόχο να παρέχει πολύτιμες πληροφορίες και συμβουλές για τη φροντίδα των βρεφών, από τη διατροφή μέχρι την ανάπτυξη και την υγεία τους.",
@@ -103,8 +104,8 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
     slug: "vitamins-supplements",
     title: "Οδηγός Βιταμίνες και Συμπληρώματα",
     breadcrumb: "Οδηγός Βιταμίνες και Συμπληρώματα",
-    headerBannerImage: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=1200&q=80",
-    featuredImage: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1000&q=80",
+    headerBannerImage: "/guide/guide-banner-suppliments&vitamins-2.webp",
+    featuredImage: "/guide/guide-banner-suppliments&vitamins-2.webp",
     introHeading: "Οδηγός Βιταμίνες & Συμπληρώματα",
     introText:
       "Τα συμπληρώματα διατροφής μπορούν να παίξουν σημαντικό ρόλο στη διατήρηση της υγείας μας, συμπληρώνοντας τη διατροφή μας όταν αυτή δεν είναι αρκετή. Ωστόσο, είναι απαραίτητο να τα χρησιμοποιούμε με υπευθυνότητα και υπό την καθοδήγηση ειδικών, καθώς η υπερβολική ή ακατάλληλη χρήση τους μπορεί να είναι επιζήμια για την υγεία. Πριν ξεκινήσετε οποιοδήποτε συμπλήρωμα, συμβουλευτείτε τον γιατρό ή τον φαρμακοποιό σας.",
@@ -122,17 +123,19 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "vit-c-1",
                 name: "Solgar Vitamin C 1000mg 100 Φυτοκάψουλες για την Ενίσχυση του Ανοσοποιητικού",
                 brand: "Solgar",
-                price: 18.50,
-                originalPrice: 24.00,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                price: 18.5,
+                originalPrice: 24.0,
+                image:
+                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "vit-c-2",
                 name: "Lamberts Vitamin C Time Release 1000mg 60 Ταμπλέτες Σταδιακής Αποδέσμευσης",
                 brand: "Lamberts",
-                price: 16.20,
-                originalPrice: 21.00,
-                image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
+                price: 16.2,
+                originalPrice: 21.0,
+                image:
+                  "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -143,9 +146,10 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "vit-multi-1",
                 name: "Centrum Multivitamin Adult 30 Δισκία Πλήρης Σύνθεση",
                 brand: "Centrum",
-                price: 13.80,
-                originalPrice: 17.50,
-                image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
+                price: 13.8,
+                originalPrice: 17.5,
+                image:
+                  "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -156,9 +160,10 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "vit-mineral-1",
                 name: "Power Health Magnesium Direct 350mg 30 Φακελίσκοι Χωρίς Νερό",
                 brand: "Power Health",
-                price: 9.90,
-                originalPrice: 13.20,
-                image: "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=400&q=80",
+                price: 9.9,
+                originalPrice: 13.2,
+                image:
+                  "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -169,33 +174,37 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "vit-kid-1",
                 name: "Chewy Vites Kids Multivitamin Plus Iron 60 Ζελεδάκια Φρούτων",
                 brand: "Chewy Vites",
-                price: 10.40,
-                originalPrice: 13.90,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                price: 10.4,
+                originalPrice: 13.9,
+                image:
+                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "vit-kid-2",
                 name: "Moller's Omega-3 Μουρουνέλαιο Ζελεδάκια Ψαράκια 45 τεμάχια",
                 brand: "Moller's",
-                price: 15.60,
-                originalPrice: 19.50,
-                image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
+                price: 15.6,
+                originalPrice: 19.5,
+                image:
+                  "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "vit-kid-3",
                 name: "Nature's Plus Animal Parade Gold Πολυβιταμίνες για Παιδιά 60 Μασώμενα",
                 brand: "Nature's Plus",
-                price: 19.90,
-                originalPrice: 25.00,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                price: 19.9,
+                originalPrice: 25.0,
+                image:
+                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "vit-kid-4",
                 name: "Lanes Kidi Multi Ζελεδάκια με 9 Βιταμίνες 60 Τεμάχια",
                 brand: "Lanes",
-                price: 8.90,
-                originalPrice: 11.50,
-                image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
+                price: 8.9,
+                originalPrice: 11.5,
+                image:
+                  "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -214,9 +223,10 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "supp-prob-1",
                 name: "Bio-Kult Advanced Multi-Strain Formula 60 Κάψουλες Προβιοτικών",
                 brand: "Bio-Kult",
-                price: 19.80,
-                originalPrice: 26.00,
-                image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
+                price: 19.8,
+                originalPrice: 26.0,
+                image:
+                  "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -227,9 +237,10 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "supp-weight-1",
                 name: "XLS Medical Pro-7 Fat Binder 180 Καψάκια για Απώλεια Βάρους",
                 brand: "XLS Medical",
-                price: 49.90,
-                originalPrice: 68.00,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                price: 49.9,
+                originalPrice: 68.0,
+                image:
+                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -240,9 +251,10 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "supp-energy-1",
                 name: "Tonotil Plus Συμπλήρωμα Τόνωσης & Ενέργειας 15 Φιαλίδια των 10ml",
                 brand: "Tonotil",
-                price: 14.50,
-                originalPrice: 18.90,
-                image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
+                price: 14.5,
+                originalPrice: 18.9,
+                image:
+                  "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
@@ -253,25 +265,28 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
                 id: "supp-omega-1",
                 name: "Eskimo-3 Pure Fish Oil Omega-3 105ml Φυσικό Έλαιο Ψαριών",
                 brand: "Eskimo",
-                price: 16.90,
-                originalPrice: 22.00,
-                image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
+                price: 16.9,
+                originalPrice: 22.0,
+                image:
+                  "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "supp-omega-2",
                 name: "Solgar Omega-3 Double Strength 700mg 60 Μαλακές Κάψουλες",
                 brand: "Solgar",
-                price: 24.30,
-                originalPrice: 31.00,
-                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                price: 24.3,
+                originalPrice: 31.0,
+                image:
+                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
               {
                 id: "supp-omega-3",
                 name: "Mollers Total Plus Omega 3 με Βιταμίνες & Μέταλλα 28 Κάψουλες + 28 Ταμπλέτες",
                 brand: "Moller's",
-                price: 21.50,
-                originalPrice: 27.50,
-                image: "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=400&q=80",
+                price: 21.5,
+                originalPrice: 27.5,
+                image:
+                  "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },

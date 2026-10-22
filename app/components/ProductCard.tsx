@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -6,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, Plus, Star } from "lucide-react";
 import type { Product } from "../types";
+import { useCart } from "@/components/cart/CartProvider";
 import { formatCurrency, getDiscountPercentage } from "@/lib/formatters";
 
 interface ProductCardProps {
@@ -18,15 +18,39 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
 }) => {
   const [liked, setLiked] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [cartError, setCartError] = useState<string | null>(null);
+  const { addItem, busy } = useCart();
+  const isWooProduct = typeof product.id === "number";
+  const onAdd = async () => {
+    if (!isWooProduct || product.price === null || product.price <= 0) return;
+    setAdding(true);
+    setCartError(null);
+    try {
+      if (typeof product.id !== "number") {
+        throw new Error("Μη έγκυρο WooCommerce Product ID.");
+      }
 
-  const discountPercent = getDiscountPercentage(product.price, product.originalPrice);
+      await addItem(product.id, 1);
+    } catch (e) {
+      setCartError(e instanceof Error ? e.message : "Σφάλμα καλαθιού");
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const discountPercent = getDiscountPercentage(
+    product.price,
+    product.originalPrice,
+  );
 
   const canAdd =
     product.price !== null &&
     product.inStock !== false &&
     product.purchasable !== false &&
     product.productType !== "variable" &&
-    Boolean(onAddToCart);
+    isWooProduct &&
+    product.price > 0;
 
   return (
     <article className="group relative flex flex-col rounded-3xl bg-white p-3 border border-ink-100 hover:border-brand-200 hover:shadow-lift transition-all duration-300">
@@ -37,7 +61,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             alt={product.name}
             fill
             unoptimized
-            loading="eager"
+            loading="lazy"
             sizes="(min-width: 1024px) 20vw, 45vw"
             className="object-contain p-4 mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
           />
@@ -61,8 +85,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full grid place-items-center glass text-ink-500 hover:text-coral-500"
         >
           <Heart
-            className={`w-4 h-4 ${liked ? "fill-coral-500 text-coral-500" : ""
-              }`}
+            className={`w-4 h-4 ${
+              liked ? "fill-coral-500 text-coral-500" : ""
+            }`}
           />
         </button>
       </div>
@@ -97,9 +122,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
 
           <span>
-            {product.inStock === false
-              ? "Εξαντλημένο"
-              : "Σε απόθεμα"}
+            {product.inStock === false ? "Εξαντλημένο" : "Σε απόθεμα"}
           </span>
         </div>
 
@@ -119,7 +142,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {canAdd ? (
             <button
               type="button"
-              onClick={() => onAddToCart?.(product)}
+              onClick={() => void onAdd()}
+              disabled={adding || busy}
               aria-label={`Προσθήκη ${product.name} στο καλάθι`}
               className="h-10 w-10 rounded-full flex items-center justify-center bg-ink-900 hover:bg-brand-600 text-white transition-all"
             >
@@ -135,6 +159,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : null}
         </div>
       </div>
+      {cartError && (
+        <p role="alert" className="px-2 pb-2 text-xs text-red-600">
+          {cartError}
+        </p>
+      )}
     </article>
   );
 };

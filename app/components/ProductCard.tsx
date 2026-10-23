@@ -112,6 +112,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </h3>
 
+        {product.badges && product.badges.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap gap-1">
+            {product.badges.map((b) => (
+              <span
+                key={b}
+                className="inline-block px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-brand-50 text-brand-700 border border-brand-100"
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div className="mt-2 flex items-center gap-1 text-[11px] text-ink-500">
           {product.rating !== undefined && (
             <>
@@ -148,6 +161,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-full flex items-center justify-center bg-ink-900 hover:bg-brand-600 text-white transition-all ml-auto"
             >
               <Plus className="w-4 h-4" />
+            </button>
+          ) : onAddToCart ? (
+            <button
+              type="button"
+              onClick={() => onAddToCart(product)}
+              aria-label={`Προσθήκη ${product.name} στο καλάθι`}
+              className="shrink-0 rounded-full bg-ink-900 hover:bg-brand-600 px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold text-white whitespace-nowrap ml-auto flex items-center gap-1 transition-all shadow-sm"
+            >
+              <Plus className="w-3.5 h-3.5" /> Προσθήκη
             </button>
           ) : product.slug ? (
             <Link

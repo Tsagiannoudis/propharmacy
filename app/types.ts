@@ -15,6 +15,7 @@ export interface Product {
   categories?: { id?: number; name: string; slug: string }[];
   brandSlug?: string;
   tags?: { id?: number; name: string; slug: string }[];
+  badges?: string[];
 }
 
 export interface CategoryGroup {

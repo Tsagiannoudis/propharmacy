@@ -11,11 +11,11 @@ export function ProductGrid({ filters }: { filters: ShopFiltersState }) {
             {/* Grid */}
             {shown.length > 0 ? (
               <>
-                <div className="mt-5 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                <div className="mt-5 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                   {shown.map((product, i) => (
                     <div
                       key={product.id}
-                      className="animate-fade-up"
+                      className="min-w-0 animate-fade-up"
                       style={{ animationDelay: `${(i % PAGE_SIZE) * 25}ms` }}
                     >
                       <ProductCard product={product} />

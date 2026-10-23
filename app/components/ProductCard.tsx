@@ -126,14 +126,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         </div>
 
-        <div className="mt-auto pt-3 flex items-end justify-between gap-2">
-          <div className="leading-tight">
-            <span className="block font-display text-lg font-extrabold text-ink-900">
+        <div className="mt-auto pt-3 flex flex-wrap items-end justify-between gap-2">
+          <div className="min-w-0 leading-tight">
+            <span className="block font-display text-base sm:text-lg font-extrabold text-ink-900 truncate">
               {formatCurrency(product.price)}
             </span>
 
             {product.originalPrice !== undefined && (
-              <span className="text-xs text-ink-400 line-through">
+              <span className="text-xs text-ink-400 line-through truncate block">
                 {formatCurrency(product.originalPrice)}
               </span>
             )}
@@ -145,14 +145,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               onClick={() => void onAdd()}
               disabled={adding || busy}
               aria-label={`Προσθήκη ${product.name} στο καλάθι`}
-              className="h-10 w-10 rounded-full flex items-center justify-center bg-ink-900 hover:bg-brand-600 text-white transition-all"
+              className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-full flex items-center justify-center bg-ink-900 hover:bg-brand-600 text-white transition-all ml-auto"
             >
               <Plus className="w-4 h-4" />
             </button>
           ) : product.slug ? (
             <Link
               href={`/products/${product.slug}`}
-              className="rounded-full bg-ink-900 px-3 py-2 text-xs font-semibold text-white"
+              className="shrink-0 rounded-full bg-ink-900 px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-white whitespace-nowrap ml-auto"
             >
               Προβολή
             </Link>

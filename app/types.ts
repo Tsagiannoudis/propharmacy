@@ -12,8 +12,9 @@ export interface Product {
   productType?: string;
   slug?: string;
   onSale?: boolean;
-  categories?: { name: string; slug: string }[];
+  categories?: { id?: number; name: string; slug: string }[];
   brandSlug?: string;
+  tags?: { id?: number; name: string; slug: string }[];
 }
 
 export interface CategoryGroup {

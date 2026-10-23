@@ -32,18 +32,25 @@ function toggleInSet(set: Set<string>, value: string): Set<string> {
   else next.add(value);
   return next;
 }
+import type { CategoryTreeNode } from "@/lib/woocommerce";
+
 export interface FilterChip { key: string; label: string; onRemove: () => void }
-export function useShopFilters(products: Product[]) {
+export function useShopFilters(products: Product[], categoryTree: CategoryTreeNode[] = []) {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [categories, setCategories] = useState<Set<string>>(new Set());
 
-  // Keep the URL category in sync, including when navigating between category links.
+  // Keep the URL category & tag in sync, including when navigating between links.
   const urlCategory = searchParams.get("category");
+  const urlTag = searchParams.get("tag");
+
+  const [tag, setTag] = useState<string | null>(null);
+
   useEffect(() => {
     setCategories(urlCategory ? new Set([urlCategory]) : new Set());
+    setTag(urlTag || null);
     setVisible(PAGE_SIZE);
-  }, [urlCategory]);
+  }, [urlCategory, urlTag]);
   const [brands, setBrands] = useState<Set<string>>(new Set());
   const [brandQuery, setBrandQuery] = useState("");
   const [priceRangeId, setPriceRangeId] = useState("all");
@@ -100,10 +107,32 @@ export function useShopFilters(products: Product[]) {
         );
         if (!haystack.includes(q)) return false;
       }
-      if (categories.size > 0 && !(p.categories ?? []).some((c) => categories.has(c.slug))) {
-        return false;
+      if (categories.size > 0) {
+        // Expand selected categories to also include their children slugs if it's a parent category
+        const expandedSelectedSlugs = new Set<string>();
+        for (const selSlug of categories) {
+          expandedSelectedSlugs.add(selSlug);
+          const parentNode = categoryTree.find((n) => n.slug === selSlug);
+          if (parentNode && parentNode.children) {
+            for (const child of parentNode.children) {
+              expandedSelectedSlugs.add(child.slug);
+            }
+          }
+        }
+
+        const matches = (p.categories ?? []).some((c) => expandedSelectedSlugs.has(c.slug));
+        if (!matches) return false;
       }
       if (brands.size > 0 && !brands.has(p.brandSlug ?? p.brand ?? "")) return false;
+      if (tag) {
+        const decodedTag = decodeURIComponent(tag).toLowerCase().trim();
+        const hasMatchingTag = (p.tags ?? []).some((t) => {
+          const tSlug = decodeURIComponent(t.slug).toLowerCase().trim();
+          const tName = t.name.toLowerCase().trim();
+          return tSlug === decodedTag || tName === decodedTag;
+        });
+        if (!hasMatchingTag) return false;
+      }
       if (range.id !== "all") {
         if (p.price === null || p.price < range.min || p.price >= range.max) return false;
       }
@@ -162,10 +191,24 @@ export function useShopFilters(products: Product[]) {
   if (inStockOnly) activeChips.push({ key: "stock", label: "Σε απόθεμα", onRemove: () => setInStockOnly(false) });
   if (onSaleOnly) activeChips.push({ key: "sale", label: "Σε προσφορά", onRemove: () => setOnSaleOnly(false) });
 
+  if (tag) {
+    const foundTag = products
+      .flatMap((p) => p.tags ?? [])
+      .find((t) => t.slug === tag || t.slug === decodeURIComponent(tag));
+    const tagLabel = foundTag ? foundTag.name : decodeURIComponent(tag);
+
+    activeChips.push({
+      key: `tag-${tag}`,
+      label: `Ετικέτα: ${tagLabel}`,
+      onRemove: () => setTag(null),
+    });
+  }
+
   const resetFilters = () => {
     setQuery("");
     setCategories(new Set());
     setBrands(new Set());
+    setTag(null);
     setPriceRangeId("all");
     setInStockOnly(false);
     setOnSaleOnly(false);
@@ -181,13 +224,31 @@ export function useShopFilters(products: Product[]) {
     };
 
 
+  // Determine active parent category if selected, or if a selected subcategory belongs to a parent
+  const activeParentCategory = useMemo(() => {
+    if (categories.size === 0) return null;
+    for (const selSlug of categories) {
+      // Is it a parent category?
+      const parent = categoryTree.find((p) => p.slug === selSlug);
+      if (parent) return parent;
+
+      // Or is it a child of a parent?
+      const foundParent = categoryTree.find((p) =>
+        p.children?.some((c) => c.slug === selSlug)
+      );
+      if (foundParent) return foundParent;
+    }
+    return null;
+  }, [categories, categoryTree]);
+
   return {
     query, setQuery, categories, setCategories, brands, setBrands,
+    tag, setTag,
     brandQuery, setBrandQuery, priceRangeId, setPriceRangeId,
     inStockOnly, setInStockOnly, onSaleOnly, setOnSaleOnly,
     sort, setSort, visible, setVisible, categoryFacets, brandFacets,
     visibleBrandFacets, filtered, shown, onSaleCount,
-    activeChips, resetFilters, withReset,
+    activeChips, resetFilters, withReset, categoryTree, activeParentCategory,
     toggleCategory: (slug: string) => withReset(setCategories)(toggleInSet(categories, slug)),
     toggleBrand: (slug: string) => withReset(setBrands)(toggleInSet(brands, slug)),
   };

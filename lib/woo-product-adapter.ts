@@ -34,9 +34,15 @@ export function mapWooProduct(woo: WooProduct): Product {
         productType: woo.type,
         onSale: woo.on_sale,
         categories: (woo.categories ?? []).map((c) => ({
+            id: c.id,
             name: decodeHtml(c.name),
             slug: c.slug,
         })),
         brandSlug: woo.brands?.[0]?.slug,
+        tags: (woo.tags ?? []).map((t) => ({
+            id: t.id,
+            name: decodeHtml(t.name),
+            slug: t.slug,
+        })),
     };
 }

@@ -12,10 +12,15 @@ import { ShopCategories } from "./components/ShopCategories";
 import { ShopToolbar } from "./components/ShopToolbar";
 import { ProductGrid } from "./components/ProductGrid";
 
-interface ShopViewProps { products: Product[] }
+import type { CategoryTreeNode } from "@/lib/woocommerce";
 
-export function ShopView({ products }: ShopViewProps) {
-  const filters = useShopFilters(products);
+interface ShopViewProps {
+  products: Product[];
+  categoryTree?: CategoryTreeNode[];
+}
+
+export function ShopView({ products, categoryTree = [] }: ShopViewProps) {
+  const filters = useShopFilters(products, categoryTree);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const { filtered, resetFilters } = filters;
 
@@ -30,7 +35,7 @@ export function ShopView({ products }: ShopViewProps) {
             <ShopFilters filters={filters} idPrefix="desktop" />
           </aside>
 
-          <div>
+          <div className="min-w-0">
             <ShopToolbar filters={filters} onOpenFilters={() => setFiltersOpen(true)} />
             <ProductGrid filters={filters} />
           </div>

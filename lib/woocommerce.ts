@@ -43,8 +43,9 @@ export interface WooProduct {
     }[];
     has_options?: boolean;
     attributes?: {
-        id: number;
+        id?: number;
         name: string;
+        slug?: string;
         taxonomy?: string;
         has_variations?: boolean;
         terms: {
@@ -52,6 +53,7 @@ export interface WooProduct {
             name: string;
             slug: string;
         }[];
+        options?: (string | { id?: number; name?: string; slug?: string })[];
     }[];
     variations?: {
         id: number;

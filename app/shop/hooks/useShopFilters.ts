@@ -40,18 +40,20 @@ export function useShopFilters(products: Product[], categoryTree: CategoryTreeNo
   const [query, setQuery] = useState("");
   const [categories, setCategories] = useState<Set<string>>(new Set());
 
-  // Keep the URL category & tag in sync, including when navigating between links.
+  // Keep the URL category, brand & tag in sync, including when navigating between links.
   const urlCategory = searchParams.get("category");
+  const urlBrand = searchParams.get("brand");
   const urlTag = searchParams.get("tag");
 
   const [tag, setTag] = useState<string | null>(null);
+  const [brands, setBrands] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setCategories(urlCategory ? new Set([urlCategory]) : new Set());
+    setBrands(urlBrand ? new Set([urlBrand]) : new Set());
     setTag(urlTag || null);
     setVisible(PAGE_SIZE);
-  }, [urlCategory, urlTag]);
-  const [brands, setBrands] = useState<Set<string>>(new Set());
+  }, [urlCategory, urlBrand, urlTag]);
   const [brandQuery, setBrandQuery] = useState("");
   const [priceRangeId, setPriceRangeId] = useState("all");
   const [inStockOnly, setInStockOnly] = useState(false);

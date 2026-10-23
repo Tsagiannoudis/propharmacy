@@ -2,12 +2,15 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { WooProduct } from "@/lib/woocommerce";
 import { decodeHtml } from "@/lib/formatters";
+import { extractBrand } from "@/lib/woo-product-adapter";
 
 export default function ProductHeader({ product }: { product: WooProduct }) {
   const categorySlug = product.categories?.[0]?.slug || "";
   const categoryName = product.categories?.[0]?.name
     ? decodeHtml(product.categories[0].name)
     : "Προϊόντα";
+  const { brand, brandSlug } = extractBrand(product);
+
   return (
       <div className="mb-8">
         <Link
@@ -23,6 +26,14 @@ export default function ProductHeader({ product }: { product: WooProduct }) {
 
           <div className="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-2">
             <div>
+              {brand && (
+                <Link
+                  href={`/shop?brand=${brandSlug || encodeURIComponent(brand)}`}
+                  className="inline-block text-xs font-bold uppercase tracking-wider text-brand-700 hover:text-brand-900 transition-colors mb-1.5"
+                >
+                  {brand}
+                </Link>
+              )}
               <h1 className="text-3xl font-extrabold tracking-tight text-ink-950 sm:text-4xl md:text-5xl">
                 {decodeHtml(product.name)}
               </h1>

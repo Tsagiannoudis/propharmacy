@@ -9,6 +9,7 @@ import ProductOptions from "./components/ProductOptions";
 import OrderSummary from "./components/OrderSummary";
 import type { ProductSelectionState } from "./components/selection-types";
 import { parseWooPrice } from "@/lib/pricing";
+import { isBrandAttribute } from "@/lib/woo-product-adapter";
 
 interface Props {
   product: WooProduct;
@@ -22,10 +23,8 @@ export default function ProductDetail({ product }: Props) {
   // ========================================================
   // Filter selectable attributes (excluding administrative metadata like Company/Brand)
   const selectableAttributes = (product.attributes ?? []).filter((attr) => {
-    const nameLower = attr.name.toLowerCase();
     return (
-      nameLower !== "εταιρία" &&
-      nameLower !== "brand" &&
+      !isBrandAttribute(attr) &&
       attr.terms &&
       attr.terms.length > 0
     );

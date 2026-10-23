@@ -147,6 +147,132 @@ export interface BuyingGuideDetail {
       badge?: string;
     }[];
   };
+
+  // Layering Routine Guide (Morning vs Evening)
+  layeringGuide?: {
+    title: string;
+    subtitle: string;
+    steps: {
+      stepNumber: number;
+      title: string;
+      morning: {
+        action: string;
+        example: string;
+      };
+      evening: {
+        action: string;
+        example: string;
+      };
+    }[];
+  };
+
+  // Routine by Skin Type Filter
+  skinTypesGuide?: {
+    title: string;
+    subtitle: string;
+    types: {
+      id: string;
+      name: string;
+      badge: string;
+      keyIngredients: string;
+      description: string;
+      routineSteps: string[];
+      tip: string;
+      products: Product[];
+    }[];
+  };
+
+  // Cheat Sheet: Active Ingredient Combinations («Τι συνδυάζεται με τι;»)
+  ingredientCombinations?: {
+    title: string;
+    subtitle: string;
+    dos: {
+      pair: string;
+      rule: string;
+      reason: string;
+      badge?: string;
+    }[];
+    donts: {
+      pair: string;
+      rule: string;
+      reason: string;
+      badge?: string;
+    }[];
+  };
+
+  // Pharmacist Consultation Call-to-Action (Lead Generation)
+  pharmacistCta?: {
+    badge?: string;
+    title: string;
+    subtitle: string;
+    phone: string;
+    buttonText: string;
+    note?: string;
+  };
+
+  // Texture / Hydration Comparison Guide («Πώς διαλέγω ενυδάτωση ανάλογα με τον τύπο δέρματος;»)
+  textureGuide?: {
+    title: string;
+    subtitle: string;
+    textures: {
+      type: string;
+      idealFor: string;
+      characteristics: string;
+      ingredients: string;
+      badge?: string;
+    }[];
+  };
+
+  // Pro Tips & Application Rituals («Tips & Τελετουργία Εφαρμογής»)
+  proTips?: {
+    title: string;
+    subtitle: string;
+    tips: {
+      title: string;
+      description: string;
+      badge: string;
+      icon?: string;
+    }[];
+  };
+
+  // Hair Specific: Dandruff vs Dry Scalp Comparison Box («Πιτυρίδα ή Ξηροδερμία;»)
+  dandruffComparison?: {
+    title: string;
+    subtitle: string;
+    rows: {
+      symptom: string;
+      dryScalp: string;
+      oilyDandruff: string;
+    }[];
+    dryScalpRec: {
+      badge: string;
+      title: string;
+      description: string;
+      product: Product;
+    };
+    oilyDandruffRec: {
+      badge: string;
+      title: string;
+      description: string;
+      product: Product;
+    };
+  };
+
+  // Hair Specific: 1-2-3 Hair Loss Protocol Routine Bundle
+  hairLossProtocol?: {
+    title: string;
+    subtitle: string;
+    badge?: string;
+    bundlePrice: number;
+    originalPrice?: number;
+    steps: {
+      stepNumber: number;
+      stepTitle: string;
+      action: string;
+      timing: string;
+      product: Product;
+    }[];
+  };
 }
 
 export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
@@ -1348,90 +1474,725 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
     breadcrumb: "Περιποίηση Προσώπου",
     headerBannerImage: "/guide/guide-banner-Facial-Care.webp",
     featuredImage: "/guide/guide-banner-Facial-Care.webp",
-    introHeading: "Η Ιδανική Ρουτίνα για το Δέρμα σας",
+    introHeading: "Ολοκληρωμένος Οδηγός Περιποίησης Προσώπου",
     introText:
-      "Κάθε επιδερμίδα είναι μοναδική. Ένας σωστός συνδυασμός καθαρισμού, ενυδάτωσης, στοχευμένων ορών και αντηλιακής προστασίας διατηρεί το πρόσωπο λαμπερό, υγιές και προστατευμένο από την πρόωρη γήρανση.",
+      "Η επιδερμίδα του προσώπου είναι ο καθρέφτης της υγείας μας και καθημερινά εκτίθεται σε ρύπανση, στρες και UV ακτινοβολία. Οι φαρμακοποιοί και δερμοκαλλυντικοί σύμβουλοι του ProPharmacy ετοίμασαν τον απόλυτο πρακτικό οδηγό για τη σωστή σειρά εφαρμογής (layering), τους κανόνες συνδυασμού δραστικών συστατικών και τις εξατομικευμένες ρουτίνες ανά τύπο δέρματος.",
+    quizEnabled: true,
+
+    // 1. Βασικοί Άξονες Ρουτίνας
     sections: [
       {
         number: "1.",
-        title: "Ήπιος Καθαρισμός",
+        title: "Ήπιος Καθαρισμός & Διπλό Ντεμακιγιάζ",
         items: [
-          "Πρωί & Βράδυ: Απομακρύνετε ρύπους και σμήγμα χωρίς να διαταράσσετε τον επιδερμικό φραγμό.",
-          "Επιλογή βάσει τύπου: Τζελ για λιπαρές/μικτές επιδερμίδες, κρεμώδες γαλάκτωμα ή έλαιο για ξηρές.",
+          "Πρωί & Βράδυ: Απαραίτητο πρώτο βήμα για απομάκρυνση σμήγματος, νεκρών κυττάρων, ρύπων και μακιγιάζ χωρίς να διαταράσσεται ο υδρολιπιδικός φραγμός.",
+          "Επιλογή βάσει τύπου: Αφρίζον τζελ χωρίς σαπούνι για λιπαρές/ακνεϊκές επιδερμίδες, ενυδατικό κρεμώδες γαλάκτωμα ή balm για ξηρές/ευαίσθητες.",
         ],
       },
       {
         number: "2.",
-        title: "Στοχευμένοι Οροί (Serums)",
+        title: "Στοχευμένοι Οροί (Serums) & Ενεργά Συστατικά",
         items: [
-          "Αντιοξειδωτικά: Βιταμίνη C το πρωί για λάμψη και προστασία από περιβαλλοντικές επιθέσεις.",
-          "Αντιγήρανση & Ανάπλαση: Ρετινόλη, υαλουρονικό οξύ και πεπτίδια για ελαστικότητα και λείανση ρυτίδων.",
+          "Υψηλή συγκέντρωση: Τα serums διεισδύουν βαθύτερα από τις κρέμες χάρη στα μικρομόριά τους.",
+          "Στρατηγική 24ώρου: Αντιοξειδωτική Βιταμίνη C το πρωί για λάμψη και φωτοπροστασία · Ρετινόλη ή οξέα AHA/BHA το βράδυ για κυτταρική ανανέωση.",
         ],
       },
       {
         number: "3.",
-        title: "Ενυδάτωση & Φραγμός",
+        title: "Ενυδάτωση, Θρέψη & Προστασία Φραγμού",
         items: [
-          "Κρέμα ημέρας/νύχτας: «Κλειδώνει» την υγρασία και υποστηρίζει την ανάπλαση της επιδερμίδας.",
-          "Κεραμίδια & Νιασιναμίδη: Ενισχύουν την ανθεκτικότητα και καταπραΰνουν ερεθισμούς.",
+          "Κλείδωμα υγρασίας: Η κρέμα ημέρας/νύχτας σφραγίζει τα δραστικά συστατικά των ορών και αναπληρώνει τα διαδερμικά λιπίδια.",
+          "Κεραμίδια & Νιασιναμίδη: Τα δύο χρυσά συστατικά που αναδομούν τον προστατευτικό φραγμό και καταπραΰνουν κοκκινίλες.",
         ],
       },
       {
         number: "4.",
-        title: "Καθημερινή Αντηλιακή Προστασία",
+        title: "Καθημερινή Αντηλιακή Προστασία (SPF 30/50+)",
         items: [
-          "365 ημέρες τον χρόνο: Η υπεριώδης ακτινοβολία UVA ευθύνεται για το 80% της πρόωρης γήρανσης.",
-          "SPF 30+: Εφαρμόστε ως τελευταίο βήμα της πρωινής σας ρουτίνας.",
+          "365 ημέρες τον χρόνο: Το 80% της πρόωρης γήρανσης, των κηλίδων και των ρυτίδων οφείλεται στην ακτινοβολία UVA που διαπερνά σύννεφα και τζάμια.",
+          "Τελευταίο πρωινό βήμα: Εφαρμόστε ποσότητα 2 δακτύλων σε πρόσωπο, λαιμό και αυτιά 20 λεπτά πριν την έκθεση.",
         ],
       },
     ],
+
+    // 2. Οδηγός Ρουτίνας «Βήμα-Βήμα» (Πρωί vs Βράδυ)
+    layeringGuide: {
+      title: "Οδηγός Ρουτίνας «Βήμα-Βήμα» (Πρωί vs Βράδυ)",
+      subtitle:
+        "Ο σωστός κανόνας layering: από την πιο λεπτόρρευστη υφή στην πιο πλούσια, για μέγιστη απορρόφηση χωρίς υπερφόρτωση της επιδερμίδας.",
+      steps: [
+        {
+          stepNumber: 1,
+          title: "Καθαρισμός",
+          morning: {
+            action: "Ήπιο τζελ ή νερό micellar",
+            example: "Απομάκρυνση νυχτερινού σμήγματος και εφίδρωσης χωρίς τρίψιμο.",
+          },
+          evening: {
+            action: "Διπλός καθαρισμός (έλαιο/balm + τζελ)",
+            example: "Το έλαιο διαλύει αντηλιακό και μακιγιάζ, το τζελ απομακρύνει τους υδατοδιαλυτούς ρύπους.",
+          },
+        },
+        {
+          stepNumber: 2,
+          title: "Τόνωση / Essence",
+          morning: {
+            action: "Ενυδατική λοσιόν / ιαματικό νερό",
+            example: "Επαναφέρει το φυσιολογικό pH (5.5) και προετοιμάζει το δέρμα για τον ορό.",
+          },
+          evening: {
+            action: "Τονωτική λοσιόν με AHA/BHA (αν χρειάζεται)",
+            example: "Χημική απολέπιση 2-3 φορές την εβδομάδα για λεία υφή και καθαρούς πόρους.",
+          },
+        },
+        {
+          stepNumber: 3,
+          title: "Στοχευμένος Ορός (Serum)",
+          morning: {
+            action: "Βιταμίνη C ή Υαλουρονικό Οξύ",
+            example: "Προστασία από ελεύθερες ρίζες, μείωση δυσχρωμιών και βαθιά ενυδάτωση.",
+          },
+          evening: {
+            action: "Ρετινόλη, Πεπτίδια ή Νιασιναμίδη",
+            example: "Διέγερση παραγωγής κολλαγόνου, λείανση ρυτίδων και κυτταρική επανόρθωση.",
+          },
+        },
+        {
+          stepNumber: 4,
+          title: "Φροντίδα Ματιών",
+          morning: {
+            action: "Ενυδατική κρέμα ματιών / κατά των μαύρων κύκλων",
+            example: "Ελαφριά υφή gel με καφεΐνη ή υαλουρονικό για αποσυμφόρηση και φωτεινότητα.",
+          },
+          evening: {
+            action: "Αντιρυτιδική / συσφικτική κρέμα ματιών",
+            example: "Πλούσια σύνθεση με πεπτίδια ή ήπια ρετινόλη για το «πόδι της χήνας».",
+          },
+        },
+        {
+          stepNumber: 5,
+          title: "Ενυδάτωση & Φραγμός",
+          morning: {
+            action: "Ελαφριά κρέμα ημέρας (gel-cream)",
+            example: "Κλειδώνει την υγρασία χωρίς να βαραίνει πριν το μακιγιάζ ή το αντηλιακό.",
+          },
+          evening: {
+            action: "Πλούσια επανορθωτική κρέμα νύχτας",
+            example: "Αναπληρώνει κεραμίδια και λιπίδια κατά τη διάρκεια της νυχτερινής ανάπλασης.",
+          },
+        },
+        {
+          stepNumber: 6,
+          title: "Προστασία",
+          morning: {
+            action: "Αντηλιακό SPF 30 / SPF 50+",
+            example: "Το απόλυτο μη-διαπραγματεύσιμο βήμα ενάντια σε φωτογήρανση και κηλίδες.",
+          },
+          evening: {
+            action: "Τέλος βραδινής ρουτίνας",
+            example: "Η επιδερμίδα αναπνέει και ανανεώνεται κατά τον νυχτερινό ύπνο.",
+          },
+        },
+      ],
+    },
+
+    // 3. Φίλτρο «Επίλεξε με βάση τον Τύπο Δέρματός σου» (Routine by Skin Type)
+    skinTypesGuide: {
+      title: "Επίλεξε με βάση τον Τύπο Δέρματός σου",
+      subtitle:
+        "Εξειδικευμένες ρουτίνες και ενεργά συστατικά προσαρμοσμένα στις ακριβείς βιολογικές ανάγκες της δικής σας επιδερμίδας.",
+      types: [
+        {
+          id: "oily-acne",
+          name: "Λιπαρό / Με τάση Ακμής",
+          badge: "Σμηγματορρύθμιση & Πόροι",
+          keyIngredients: "Σαλικυλικό οξύ (BHA), Νιασιναμίδη, Ψευδάργυρος, Υαλουρονικό σε fluid",
+          description:
+            "Χαρακτηρίζεται από έντονη γυαλάδα στη ζώνη Τ, διεσταλμένους πόρους, μαύρα στίγματα και συχνές φλεγμονώδεις βλάβες (σπυράκια).",
+          routineSteps: [
+            "Καθαρισμός: Αφρώδες τζελ με σαλικυλικό οξύ και ψευδάργυρο χωρίς σαπούνι",
+            "Serum: Νιασιναμίδη 10% για ρύθμιση λιπαρότητας και σμίκρυνση πόρων",
+            "Ενυδάτωση: Ελαφριά oil-free μη φαγεσωρογόνος κρέμα-gel",
+            "Αντηλιακό: Ματ dry-touch αντηλιακό fluid SPF 50+ με σμηγματορρυθμιστική δράση",
+          ],
+          tip: "Μην αφυδατώνετε υπερβολικά το δέρμα με σκληρά οινόπνευμα — προκαλείται αντιδραστική υπερέκκριση σμήγματος.",
+          products: [
+            {
+              id: "fc-oily-1",
+              name: "La Roche-Posay Effaclar Duo+ M Επανορθωτική Φροντίδα 40ml",
+              brand: "La Roche-Posay",
+              price: 15.2,
+              originalPrice: 19.0,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-oily-2",
+              name: "The Ordinary Niacinamide 10% + Zinc 1% Ορός 30ml",
+              brand: "The Ordinary",
+              price: 7.9,
+              originalPrice: 9.5,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-oily-3",
+              name: "Avene Cleanance Solar Αντηλιακό Προσώπου SPF50+ για Λιπαρό Δέρμα 50ml",
+              brand: "Avene",
+              price: 14.8,
+              originalPrice: 19.5,
+              image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-oily-4",
+              name: "CeraVe Blemish Control Cleanser Τζελ Καθαρισμού κατά των Ατελειών 236ml",
+              brand: "CeraVe",
+              price: 11.5,
+              originalPrice: 14.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "dry-dehydrated",
+          name: "Ξηρό / Αφυδατωμένο",
+          badge: "Εντατική Θρέψη & Λιπίδια",
+          keyIngredients: "Κεραμίδια (Ceramides 1, 3, 6-II), Υαλουρονικό Οξύ, Σκουαλάνιο, Γλυκερίνη",
+          description:
+            "Έντονη αίσθηση τραβήγματος μετά τον καθαρισμό, τραχιά υφή, θαμπή όψη, λεπτές γραμμές αφυδάτωσης και ευαισθησία στο κρύο.",
+          routineSteps: [
+            "Καθαρισμός: Κρεμώδες ενυδατικό γαλάκτωμα ή καθαριστικό λάδι χωρίς αφρό",
+            "Serum: Ορός υαλουρονικού οξέος πολλαπλού μοριακού βάρους σε νωπό δέρμα",
+            "Ενυδάτωση: Πλούσια επανορθωτική κρέμα εμπλουτισμένη με κεραμίδια και λιπίδια",
+            "Αντηλιακό: Ενυδατική αντηλιακή κρέμα SPF 50+ με αντιοξειδωτικά",
+          ],
+          tip: "Εφαρμόζετε πάντα τον ορό υαλουρονικού οξέος σε ελαφρώς νωπό δέρμα και «κλειδώνετε» αμέσως με την ενυδατική κρέμα.",
+          products: [
+            {
+              id: "fc-dry-1",
+              name: "CeraVe Hydrating Cleanser Ενυδατική Κρέμα Καθαρισμού 473ml",
+              brand: "CeraVe",
+              price: 13.5,
+              originalPrice: 16.9,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-dry-2",
+              name: "Vichy Mineral 89 Ενυδατικό Booster Υαλουρονικού Οξέος 50ml",
+              brand: "Vichy",
+              price: 19.8,
+              originalPrice: 24.5,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-dry-3",
+              name: "CeraVe Moisturising Cream Ενυδατική Κρέμα Προσώπου & Σώματος 340g",
+              brand: "CeraVe",
+              price: 14.5,
+              originalPrice: 18.2,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-dry-4",
+              name: "La Roche-Posay Anthelios UVMune 400 Hydrating Cream SPF50+ 50ml",
+              brand: "La Roche-Posay",
+              price: 16.5,
+              originalPrice: 21.0,
+              image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "sensitive-redness",
+          name: "Ευαίσθητο / Με κοκκινίλες (Ροδόχρους)",
+          badge: "Καταπράυνση & Ανοχή",
+          keyIngredients: "Νευροσενσίνη, Ιαματικό Νερό, Madecassoside, Χωρίς Άρωμα / Οινόπνευμα",
+          description:
+            "Υπεραντιδραστικό δέρμα με τάση για ερυθρότητα, αίσθημα καύσου, τσιμπήματος και έντονη δυσανεξία σε κοινά καλλυντικά.",
+          routineSteps: [
+            "Καθαρισμός: Καταπραϋντικό νερό Micellar ή γαλάκτωμα χωρίς ξέβγαλμα και χωρίς τρίψιμο",
+            "Τόνωση: Άφθονος ψεκασμός με φυσικό ιαματικό νερό πλούσιο σε ιχνοστοιχεία",
+            "Ενυδάτωση: Αποστειρωμένη κρέμα καταπράυνσης εξαιρετικά υψηλής ανοχής (χωρίς συντηρητικά)",
+            "Αντηλιακό: 100% ορυκτό/φυσικό αντηλιακό ή σύνθεση κατά της ερυθρότητας SPF 50+",
+          ],
+          tip: "Αποφύγετε τα μηχανικά scrubs με κόκκους, τα έντονα αρώματα, τα αιθέρια έλαια και το πολύ ζεστό νερό.",
+          products: [
+            {
+              id: "fc-sens-1",
+              name: "Bioderma Sensibio H2O Καταπραϋντικό Νερό Micellar 500ml",
+              brand: "Bioderma",
+              price: 12.9,
+              originalPrice: 17.0,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-sens-2",
+              name: "Avene Tolerance Control Soothing Skin Recovery Cream 40ml",
+              brand: "Avene",
+              price: 16.9,
+              originalPrice: 21.5,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-sens-3",
+              name: "La Roche-Posay Toleriane Dermallergo Ενυδατική Κρέμα 40ml",
+              brand: "La Roche-Posay",
+              price: 18.2,
+              originalPrice: 23.0,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-sens-4",
+              name: "Avene Cicalfate+ Επανορθωτική Προστατευτική Κρέμα 100ml",
+              brand: "Avene",
+              price: 11.9,
+              originalPrice: 14.9,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "mature-antiaging",
+          name: "Ώριμο δέρμα / Αντιγήρανση",
+          badge: "Σύσφιξη & Κυτταρική Ανανέωση",
+          keyIngredients: "Καθαρή Ρετινόλη, Πεπτίδια, Βιταμίνη C, Υαλουρονικό 3 μεγεθών",
+          description:
+            "Απώλεια ελαστικότητας και σφριγηλότητας, εγκατεστημένες ρυτίδες έκφρασης, κηλίδες φωτογήρανσης και λέπτυνση της επιδερμίδας.",
+          routineSteps: [
+            "Καθαρισμός: Ήπιος ενυδατικός καθαρισμός που διατηρεί τον λιπιδικό φραγμό",
+            "Πρωινό Serum: Βιταμίνη C 10% για αντιοξειδωτική λάμψη και καταπολέμηση δυσχρωμιών",
+            "Βραδινό Serum: Ρετινόλη σταδιακής αποδέσμευσης για κυτταρική ανάπλαση και λείανση",
+            "Ενυδάτωση & Μάτια: Συσφικτική κρέμα με πεπτίδια και εξειδικευμένη κρέμα ματιών",
+            "Αντηλιακό: Αντηλιακό fluid ευρέος φάσματος SPF 50+ με αντιγηραντικά πεπτίδια",
+          ],
+          tip: "Εισάγετε τη ρετινόλη σταδιακά: 2 φορές την εβδομάδα το πρώτο 15ήμερο και εφαρμόστε πάντα ενυδατική κρέμα («μέθοδος σάντουιτς»).",
+          products: [
+            {
+              id: "fc-mat-1",
+              name: "La Roche-Posay Pure Vitamin C10 Αντιοξειδωτικός Ορός Λάμψης 30ml",
+              brand: "La Roche-Posay",
+              price: 34.9,
+              originalPrice: 43.5,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-mat-2",
+              name: "La Roche-Posay Retinol B3 Serum Αντιρυτιδικός Ορός Ανάπλασης 30ml",
+              brand: "La Roche-Posay",
+              price: 36.5,
+              originalPrice: 45.0,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-mat-3",
+              name: "La Roche-Posay Hyalu B5 Eyes Αντιρυτιδική Κρέμα Ματιών 15ml",
+              brand: "La Roche-Posay",
+              price: 21.5,
+              originalPrice: 27.0,
+              image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "fc-mat-4",
+              name: "Frezyderm Sun Screen Velvet Face SPF50+ Αντηλιακό Προσώπου 50ml",
+              brand: "Frezyderm",
+              price: 17.5,
+              originalPrice: 23.0,
+              image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+      ],
+    },
+
+    // 4. Cheat Sheet: Ενεργά Συστατικά — «Τι συνδυάζεται με τι;»
+    ingredientCombinations: {
+      title: "Cheat Sheet: Ενεργά Συστατικά — «Τι συνδυάζεται με τι;»",
+      subtitle:
+        "Ο απόλυτος επιστημονικός οδηγός του φαρμακείου για ασφαλές mix & match δραστικών μορίων χωρίς ερεθισμούς.",
+      dos: [
+        {
+          pair: "Βιταμίνη C + Αντηλιακό (SPF 50+)",
+          rule: "Το Απόλυτο Πρωινό Δίδυμο",
+          reason:
+            "Η Βιταμίνη C εξουδετερώνει τις ελεύθερες ρίζες που καταφέρνουν να διαπεράσουν τα αντηλιακά φίλτρα. Σε συνδυασμό με το αντηλιακό, προσφέρει 8πλάσια φωτοπροστασία από ό,τι το κάθε προϊόν ξεχωριστά.",
+          badge: "Gold Standard Πρωινού",
+        },
+        {
+          pair: "Υαλουρονικό Οξύ + Οποιοδήποτε Συστατικό",
+          rule: "Οικουμενικός Σύμμαχος Ενυδάτωσης",
+          reason:
+            "Το υαλουρονικό οξύ είναι ουδέτερο ενυδατικό μόριο που δεν αλληλεπιδρά αρνητικά με κανένα οξύ ή βιταμίνη. Ενυδατώνει βαθιά και βοηθά στην καλύτερη διείσδυση όλων των επόμενων θεραπειών.",
+          badge: "100% Συμβατό",
+        },
+        {
+          pair: "Νιασιναμίδη (Β3) + Ρετινόλη",
+          rule: "Συνεργιστική Επανόρθωση",
+          reason:
+            "Η νιασιναμίδη ενισχύει τον δερματικό φραγμό, διεγείρει την παραγωγή κεραμιδίων και μετριάζει δραστικά την ξηρότητα ή το ξεφλούδισμα που ενδέχεται να προκαλέσει η ρετινόλη.",
+          badge: "Ιδανικό Βραδινό Mix",
+        },
+      ],
+      donts: [
+        {
+          pair: "Ρετινόλη + Οξέα Απολέπισης (AHA / BHA / Γλυκολικό / Σαλικυλικό)",
+          rule: "ΠΟΤΕ ταυτόχρονα στο ίδιο βράδυ",
+          reason:
+            "Και τα δύο επιταχύνουν δραστικά την κυτταρική ανανέωση. Η ταυτόχρονη χρήση τους οδηγεί σε έγκαυμα, έντονη ερυθρότητα και καταστροφή του επιδερμικού φραγμού. Εφαρμόστε τα σε εναλλάξ βράδια (skin cycling).",
+          badge: "Κίνδυνος Ερεθισμού",
+        },
+        {
+          pair: "Βιταμίνη C Υψηλής Συγκέντρωσης + Ρετινόλη",
+          rule: "Μην τα αναμιγνύετε στο ίδιο βήμα",
+          reason:
+            "Η καθαρή Βιταμίνη C (ασκορβικό οξύ) απαιτεί χαμηλό όξινο pH (<3.5) για να απορροφηθεί, ενώ η ρετινόλη λειτουργεί σε υψηλότερο pH (~5.5-6). Χρησιμοποιήστε Βιταμίνη C το πρωί και Ρετινόλη το βράδυ.",
+          badge: "Διαφορετικό pH",
+        },
+      ],
+    },
+
+    // 5. Πλήρεις Υποενότητες Προϊόντων (High-Converting Pharmacy Categories)
     subSections: [
       {
-        title: "Ολοκληρωμένη Ρουτίνα Προσώπου",
+        id: "cleansers-section",
+        title: "1. Ήπιος Καθαρισμός & Ντεμακιγιάζ",
+        image: "/categories/gia-to-prosopo-banner-category.webp",
         intro:
-          "Κορυφαία δερμοκαλλυντικά επιλεγμένα από τους φαρμακοποιούς μας για εξειδικευμένη φροντίδα.",
-        productHeading: "Προτεινόμενα Προϊόντα",
+          "Ο σωστός καθαρισμός απομακρύνει αποτελεσματικά τους ατμοσφαιρικούς ρύπους, το σμήγμα και το μακιγιάζ, διατηρώντας ακέραιο τον επιδερμικό φραγμό. Επιλέξτε σύνθεση που σέβεται το φυσιολογικό pH της επιδερμίδας σας.",
+        productHeading: "Προτεινόμενα Καθαριστικά Προσώπου",
         productGroups: [
           {
-            categoryTitle: "Καθαρισμός & Ενυδάτωση",
+            categoryTitle: "Αφρώδη Gel Καθαρισμού",
             products: [
               {
-                id: "fc-1",
-                name: "CeraVe Moisturising Cream Ενυδατική Κρέμα 340g",
+                id: "fc-cl-1",
+                name: "CeraVe Foaming Cleanser Αφρίζον Τζελ Καθαρισμού 473ml",
                 brand: "CeraVe",
-                price: 14.5,
-                originalPrice: 18.2,
-                image:
-                  "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+                price: 13.9,
+                originalPrice: 17.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
               },
               {
-                id: "fc-2",
-                name: "La Roche-Posay Effaclar Duo+ M Επανορθωτική Φροντίδα 40ml",
+                id: "fc-cl-2",
+                name: "La Roche-Posay Effaclar Purifying Foaming Gel 400ml",
+                brand: "La Roche-Posay",
+                price: 16.2,
+                originalPrice: 20.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-cl-3",
+                name: "Avene Cleanance Cleansing Gel για Λιπαρό Δέρμα 400ml",
+                brand: "Avene",
+                price: 14.5,
+                originalPrice: 18.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Νερά Micellar & Ενυδατικά Γαλακτώματα",
+            products: [
+              {
+                id: "fc-cl-4",
+                name: "Bioderma Sensibio H2O Καταπραϋντικό Νερό Micellar 500ml",
+                brand: "Bioderma",
+                price: 12.9,
+                originalPrice: 17.0,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-cl-5",
+                name: "CeraVe Hydrating Cleanser Ενυδατική Κρέμα Καθαρισμού 473ml",
+                brand: "CeraVe",
+                price: 13.5,
+                originalPrice: 16.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-cl-6",
+                name: "La Roche-Posay Toleriane Dermo-Cleanser Γαλάκτωμα Καθαρισμού 400ml",
+                brand: "La Roche-Posay",
+                price: 15.8,
+                originalPrice: 19.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "serums-section",
+        title: "2. Στοχευμένοι Οροί & Ampoules (Serums)",
+        image: "/guide/guide-banner-Facial-Care.webp",
+        intro:
+          "Οι οροί περιέχουν την υψηλότερη συγκέντρωση ενεργών μορίων και αποτελούν την «καρδιά» της ρουτίνας. Επιλέξτε αντιοξειδωτικά για την ημέρα και μόρια κυτταρικής ανανέωσης για τη νύχτα.",
+        productHeading: "Κορυφαία Serums Φαρμακείου",
+        productGroups: [
+          {
+            categoryTitle: "Αντιοξειδωτικά & Λάμψη (Βιταμίνη C & Νιασιναμίδη)",
+            products: [
+              {
+                id: "fc-sr-1",
+                name: "La Roche-Posay Pure Vitamin C10 Αντιοξειδωτικός Ορός Λάμψης 30ml",
+                brand: "La Roche-Posay",
+                price: 34.9,
+                originalPrice: 43.5,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sr-2",
+                name: "The Ordinary Niacinamide 10% + Zinc 1% Ορός Ρύθμισης Σμήγματος 30ml",
+                brand: "The Ordinary",
+                price: 7.9,
+                originalPrice: 9.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sr-3",
+                name: "Vichy Liftactiv Supreme Vitamin C 15% Αντιοξειδωτικός Ορός 20ml",
+                brand: "Vichy",
+                price: 31.5,
+                originalPrice: 39.9,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Ενυδάτωση & Αντιγήρανση (Υαλουρονικό & Ρετινόλη)",
+            products: [
+              {
+                id: "fc-sr-4",
+                name: "Vichy Mineral 89 Ενυδατικό Booster Υαλουρονικού Οξέος 50ml",
+                brand: "Vichy",
+                price: 19.8,
+                originalPrice: 24.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sr-5",
+                name: "La Roche-Posay Retinol B3 Serum Αντιρυτιδικός Ορός Ανάπλασης 30ml",
+                brand: "La Roche-Posay",
+                price: 36.5,
+                originalPrice: 45.0,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sr-6",
+                name: "La Roche-Posay Hyalu B5 Serum Αντιρυτιδικός Ορός Επανόρθωσης 30ml",
+                brand: "La Roche-Posay",
+                price: 33.9,
+                originalPrice: 42.0,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "eye-creams-section",
+        title: "3. Φροντίδα & Επανόρθωση Ματιών",
+        image: "/guide/back-view-woman-with-towel-head-applying-cream-skin.jpg",
+        intro:
+          "Το δέρμα γύρω από τα μάτια είναι 4 φορές πιο λεπτό από το υπόλοιπο πρόσωπο και στερείται σμηγματογόνων αδένων. Απαιτεί εξειδικευμένες οφθαλμολογικά ελεγμένες συνθέσεις για μαύρους κύκλους, σακούλες και ρυτίδες έκφρασης.",
+        productHeading: "Κορυφαίες Κρέμες Ματιών",
+        productGroups: [
+          {
+            categoryTitle: "Μαύροι Κύκλοι, Σακούλες & Πρώτες Ρυτίδες",
+            products: [
+              {
+                id: "fc-eye-1",
+                name: "CeraVe Eye Repair Cream Επανορθωτική Κρέμα Ματιών 14ml",
+                brand: "CeraVe",
+                price: 12.5,
+                originalPrice: 15.9,
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-eye-2",
+                name: "La Roche-Posay Hyalu B5 Eyes Αντιρυτιδική Φροντίδα Ματιών 15ml",
+                brand: "La Roche-Posay",
+                price: 21.5,
+                originalPrice: 27.0,
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-eye-3",
+                name: "Avene Soothing Eye Contour Cream Καταπραϋντική Κρέμα Ματιών 10ml",
+                brand: "Avene",
+                price: 13.9,
+                originalPrice: 17.5,
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-eye-4",
+                name: "Vichy Mineral 89 Eyes Ενυδατικό Gel Ματιών με Καφεΐνη 15ml",
+                brand: "Vichy",
+                price: 17.8,
+                originalPrice: 22.5,
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "moisturizers-section",
+        title: "4. Ενυδάτωση & Επανόρθωση Φραγμού",
+        image: "/categories/gia-to-prosopo-banner.webp",
+        intro:
+          "Η σωστή ενυδατική κρέμα δεν προσφέρει απλώς νερό — αναδομεί τα μεσοκυττάρια λιπίδια και σφραγίζει τα ευεργετικά συστατικά του serum.",
+        productHeading: "Ενυδατικές Κρέμες Ημέρας & Νύχτας",
+        productGroups: [
+          {
+            categoryTitle: "Ελαφριές Υφές & Ματ Αποτέλεσμα",
+            products: [
+              {
+                id: "fc-mo-1",
+                name: "La Roche-Posay Effaclar Duo+ M Επανορθωτική Φροντίδα κατά των Ατελειών 40ml",
                 brand: "La Roche-Posay",
                 price: 15.2,
                 originalPrice: 19.0,
-                image:
-                  "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-mo-2",
+                name: "CeraVe PM Facial Moisturising Lotion Ενυδατική Λοσιόν Νυκτός 52ml",
+                brand: "CeraVe",
+                price: 12.9,
+                originalPrice: 16.2,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-mo-3",
+                name: "Avene Hydrance Aqua-Gel Ενυδατική Κρέμα Πολλαπλών Χρήσεων 50ml",
+                brand: "Avene",
+                price: 18.5,
+                originalPrice: 23.5,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
           {
-            categoryTitle: "Μάσκες & Peeling",
+            categoryTitle: "Πλούσια Θρέψη & Ευαίσθητο Δέρμα",
             products: [
               {
-                id: "fc-3",
-                name: "Apivita Express Beauty Μάσκα Προσώπου με Πράσινη Άργιλο 2x8ml",
-                brand: "Apivita",
-                price: 3.4,
-                originalPrice: 4.5,
-                image:
-                  "https://images.unsplash.com/photo-1567928805192-7f40f6bee1a3?auto=format&fit=crop&w=400&q=80",
+                id: "fc-mo-4",
+                name: "CeraVe Moisturising Cream Ενυδατική Κρέμα με Κεραμίδια 340g",
+                brand: "CeraVe",
+                price: 14.5,
+                originalPrice: 18.2,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-mo-5",
+                name: "La Roche-Posay Toleriane Dermallergo Cream Καταπραϋντική Κρέμα 40ml",
+                brand: "La Roche-Posay",
+                price: 18.2,
+                originalPrice: 23.0,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-mo-6",
+                name: "Avene Tolerance Control Soothing Skin Recovery Cream 40ml",
+                brand: "Avene",
+                price: 16.9,
+                originalPrice: 21.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "sunscreens-section",
+        title: "5. Καθημερινή Αντηλιακή Προστασία Προσώπου (SPF 50+)",
+        image: "/categories/gia-to-prosopo-banner-1-520x460.webp",
+        intro:
+          "Η καλύτερη αντιγηραντική κρέμα στον κόσμο είναι το αντηλιακό σας. Προστατεύει από UVA, UVB και μπλε φως, αποτρέποντας κηλίδες, φωτογήρανση και απώλεια κολλαγόνου.",
+        productHeading: "Κορυφαία Αντηλιακά Προσώπου",
+        productGroups: [
+          {
+            categoryTitle: "Αόρατη Υφή & Ματ Τελείωμα",
+            products: [
+              {
+                id: "fc-sun-1",
+                name: "La Roche-Posay Anthelios UVMune 400 Invisible Fluid SPF50+ 50ml",
+                brand: "La Roche-Posay",
+                price: 16.5,
+                originalPrice: 21.0,
+                image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sun-2",
+                name: "Frezyderm Sun Screen Velvet Face SPF50+ Αντηλιακό Προσώπου 50ml",
+                brand: "Frezyderm",
+                price: 17.5,
+                originalPrice: 23.0,
+                image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sun-3",
+                name: "Avene Cleanance Solar SPF50+ Αντηλιακό για Δέρμα με Τάση Ακμής 50ml",
+                brand: "Avene",
+                price: 14.8,
+                originalPrice: 19.5,
+                image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "fc-sun-4",
+                name: "Vichy Capital Soleil UV-Age Daily Αντιγηραντικό Fluid SPF50+ 40ml",
+                brand: "Vichy",
+                price: 18.9,
+                originalPrice: 24.5,
+                image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
         ],
       },
     ],
+
+    // 6. FAQs για το Πρόσωπο (Schema.org ready)
+    faqs: [
+      {
+        question: "Ποια είναι η σωστή σειρά εφαρμογής των προϊόντων προσώπου (layering);",
+        answer:
+          "Ο χρυσός κανόνας είναι: από την πιο λεπτόρρευστη υφή στην πιο παχύρρευστη. Ξεκινάμε με Καθαρισμό -> Τονωτική Λοσιόν/Essence -> Serum -> Κρέμα Ματιών -> Ενυδατική Κρέμα -> Αντηλιακό (το πρωί).",
+      },
+      {
+        question: "Χρειάζεται αντηλιακό τις συννεφιασμένες ημέρες ή όταν είμαι στο γραφείο;",
+        answer:
+          "ΝΑΙ, απόλυτα. Η ακτινοβολία UVA, η οποία ευθύνεται για το 80% της πρόωρης φωτογήρανσης και των καφέ κηλίδων, διαπερνά τόσο τα σύννεφα όσο και τα τζάμια των παραθύρων, ενώ είναι παρούσα με την ίδια ένταση χειμώνα-καλοκαίρι.",
+      },
+      {
+        question: "Πώς ξεκινάω τη χρήση ρετινόλης χωρίς να ερεθίσω το δέρμα μου;",
+        answer:
+          "Ξεκινήστε με χαμηλή συγκέντρωση (0.1% - 0.3%) μόνο 2 βράδια την εβδομάδα. Εφαρμόστε τη μέθοδο «sandwich»: λεπτή στρώση ενυδατικής -> ρετινόλη -> ξανά ενυδατική κρέμα. Την επόμενη ημέρα είναι υποχρεωτική η εφαρμογή αντηλιακού SPF 50+.",
+      },
+      {
+        question: "Τι είναι ο διπλός καθαρισμός (double cleansing) και ποιοι τον χρειάζονται;",
+        answer:
+          "Είναι η μέθοδος καθαρισμού το βράδυ σε δύο στάδια: Πρώτα ένα έλαιο ή balm καθαρισμού που διαλύει το αντηλιακό και το μακιγιάζ, και στη συνέχεια ένα απαλό αφρώδες τζελ νερού που απομακρύνει τους ρύπους και τον ιδρώτα. Είναι ιδανικός για όσους φορούν καθημερινά αδιάβροχο αντηλιακό ή μακιγιάζ.",
+      },
+      {
+        question: "Μπορώ να βάλω ορό υαλουρονικού οξέος σε στεγνό δέρμα;",
+        answer:
+          "Όχι, δεν συνιστάται. Το υαλουρονικό οξύ είναι ένας μαγνήτης υγρασίας που συγκρατεί έως 1.000 φορές το βάρος του σε νερό. Αν το βάλετε σε εντελώς στεγνό δέρμα σε ξηρό περιβάλλον, μπορεί να αντλήσει υγρασία από τα βαθύτερα στρώματα της επιδερμίδας σας, προκαλώντας αίσθηση τραβήγματος. Εφαρμόστε το πάντα σε ελαφρώς νωπό δέρμα (μετά από ιαματικό νερό) και σφραγίστε αμέσως με ενυδατική κρέμα.",
+      },
+    ],
+
+    // 7. Lead Generation / Pharmacist Consultation Call-to-Action
+    pharmacistCta: {
+      badge: "Δωρεάν Συμβουλή Φαρμακοποιού",
+      title: "Έχεις αμφιβολία για τον τύπο ή τις ανάγκες του δέρματός σου;",
+      subtitle:
+        "Η εξειδικευμένη ομάδα φαρμακοποιών και συμβούλων δερμοκαλλυντικών του ProPharmacy είναι δίπλα σου για να αναλύσει τις ανάγκες της επιδερμίδας σου και να σχεδιάσει την ιδανική εξατομικευμένη ρουτίνα φροντίδας.",
+      phone: "210 1234567",
+      buttonText: "Κάλεσε τον Φαρμακοποιό (Δωρεάν)",
+      note: "Δευτέρα – Παρασκευή 09:00 – 21:00 · Σάββατο 09:00 – 15:00",
+    },
+
+    // 8. Medical Disclaimer
+    disclaimer:
+      "ΔΕΡΜΑΤΟΛΟΓΙΚΗ ΕΠΙΣΗΜΑΝΣΗ: Οι πληροφορίες και οι ρουτίνες του παρόντος οδηγού έχουν ενημερωτικό χαρακτήρα και βασίζονται στη σύγχρονη κοσμητολογία και δερμοκαλλυντική πρακτική. Σε περιπτώσεις ενεργού κυστικής ακμής, έντονης ροδόχρου νόσου, ατοπικής δερματίτιδας ή επίμονων δερματικών αλλοιώσεων, συμβουλευτείτε πάντα τον εξειδικευμένο δερματολόγο σας πριν την εφαρμογή δραστικών απολεπιστικών ή ρετινοειδών σκευασμάτων.",
   },
 
   "body-care": {
@@ -1440,183 +2201,1300 @@ export const buyingGuidesData: Record<string, BuyingGuideDetail> = {
     breadcrumb: "Περιποίηση Σώματος",
     headerBannerImage: "/guide/guide-body-banner.webp",
     featuredImage: "/guide/guide-body-banner.webp",
-    introHeading: "Ενυδάτωση, Απολέπιση & Σύσφιξη",
+    introHeading: "Ολοκληρωμένος Οδηγός Περιποίησης & Υγείας Σώματος",
     introText:
-      "Η επιδερμίδα του σώματος χρειάζεται την ίδια προσοχή με το πρόσωπο. Η τακτική απολέπιση και η καθημερινή ενυδάτωση προλαμβάνουν την ξηρότητα, τη χαλάρωση και διατηρούν το δέρμα μεταξένιο και ελαστικό.",
+      "Το δέρμα του σώματος καλύπτει το 90% της επιφάνειάς μας και συχνά παραμελείται σε σχέση με το πρόσωπο. Από την ανακούφιση του ατοπικού κνησμού και την εξομάλυνση της θυλακικής υπερκεράτωσης (strawberry legs), έως την πρόληψη ραγάδων και τη λείανση της κυτταρίτιδας, οι φαρμακοποιοί του ProPharmacy συγκέντρωσαν τις πιο αποτελεσματικές κλινικές λύσεις για κάθε ανάγκη.",
+    quizEnabled: true,
+
+    // 1. Βασικοί Άξονες Φροντίδας
     sections: [
       {
         number: "1.",
-        title: "Απαλό Ντους & Καθαρισμός",
+        title: "Ήπιος Καθαρισμός χωρίς Σαπούνι (Syndet)",
         items: [
-          "Αποφύγετε το καυτό νερό: Αφαιρεί τα φυσικά έλαια του δέρματος και προκαλεί αφυδάτωση.",
-          "Έλαια & Syndet: Χρησιμοποιήστε καθαριστικά χωρίς σαπούνι για σεβασμό του φυσικού pH.",
+          "Προστασία υδρολιπιδικού φραγμού: Το κοινό σαπούνι έχει αλκαλικό pH (~9-10) που απογυμνώνει τα λιπίδια. Προτιμήστε καθαριστικά έλαια ή syndet με φυσιολογικό pH (5.5).",
+          "Όχι στο καυτό νερό: Το νερό πάνω από 37°C διασπά τα κεραμίδια και επιδεινώνει δραματικά την ξηρότητα και τον κνησμό.",
         ],
       },
       {
         number: "2.",
-        title: "Απολέπιση 1-2 φορές την εβδομάδα",
+        title: "Στοχευμένη Απολέπιση (Χημική & Μηχανική)",
         items: [
-          "Απομάκρυνση νεκρών κυττάρων: Αφήνει το δέρμα απαλό και αυξάνει την απορρόφηση των ενυδατικών προϊόντων.",
-          "Scrub με κόκκους ή οξέα: Κάντε απαλές κυκλικές κινήσεις σε νωπό δέρμα.",
+          "Scrub με θαλάσσια άλατα & έλαια: 1-2 φορές την εβδομάδα για λείανση της τραχιάς επιδερμίδας και καλύτερη απορρόφηση ενυδατικών κρεμών.",
+          "Χημική απολέπιση με AHA/BHA & Ουρία: Ιδανική για θυλακική υπερκεράτωση («strawberry legs») και τραχύτητα σε μπράτσα και γάμπες.",
         ],
       },
       {
         number: "3.",
-        title: "Βαθιά Ενυδάτωση & Θρέψη",
+        title: "Εντατική Ενυδάτωση & Αναπλήρωση Λιπιδίων",
         items: [
-          "Εφαρμογή σε νωπή επιδερμίδα: Αμέσως μετά το μπάνιο, για να παγιδευτεί η υγρασία.",
-          "Επιλογή υφής: Ελαφριά λοσιόν το καλοκαίρι, πλούσιο butter ή balm τον χειμώνα.",
+          "Ο κανόνας των 3 λεπτών: Εφαρμόστε την κρέμα εντός 3 λεπτών από το ντους, σε ελαφρώς νωπό δέρμα, για να παγιδεύσετε τη μέγιστη υγρασία.",
+          "Επιλογή κατάλληλης υφής: Λοσιόν για κανονικό δέρμα το καλοκαίρι, πλούσιο balm με κεραμίδια για ατοπικό/πολύ ξηρό δέρμα τον χειμώνα.",
         ],
       },
       {
         number: "4.",
-        title: "Σύσφιξη & Κυτταρίτιδα",
+        title: "Σύσφιξη, Κυτταρίτιδα & Πρόληψη Ραγάδων",
         items: [
-          "Ενεργά συστατικά: Καφεΐνη, εκχυλίσματα φυκιών και ρετινόλη διεγείρουν τη μικροκυκλοφορία.",
-          "Συνέπεια & Μασάζ: Απαραίτητο το καθημερινό μασάζ με ανοδικές κινήσεις για ορατά αποτελέσματα.",
+          "Ενεργά δραστικά συστατικά: Καφεΐνη, Centella Asiatica και φυτικά έλαια ενισχύουν τη μικροκυκλοφορία και διεγείρουν την παραγωγή κολλαγόνου.",
+          "Συνέπεια & Ανοδικό Μασάζ: Απαιτούνται καθημερινές ανοδικές κινήσεις λεμφικής φοράς για τουλάχιστον 4 εβδομάδες.",
         ],
       },
     ],
+
+    // 2. Συγκριτικός Πίνακας Επιλογής Υφής: «Πώς διαλέγω ενυδάτωση ανάλογα με τον τύπο δέρματος;»
+    textureGuide: {
+      title: "Πώς Διαλέγω Ενυδάτωση ανάλογα με τον Τύπο Δέρματος;",
+      subtitle:
+        "Ο γρήγορος συγκριτικός οδηγός του φαρμακείου για να επιλέξετε την κατάλληλη σύνθεση και υφή ανάλογα με την εποχή και τις ανάγκες σας.",
+      textures: [
+        {
+          type: "Body Gel / Lotion",
+          idealFor: "Κανονικό / Λιπαρό δέρμα & Καλοκαίρι",
+          characteristics: "Εξαιρετικά λεπτόρρευστη υφή, απορροφάται άμεσα χωρίς ίχνος λιπαρότητας.",
+          ingredients: "Αλόη Βέρα, Υαλουρονικό Οξύ, Γλυκερίνη, Πανθενόλη",
+          badge: "Ελαφριά Υφή",
+        },
+        {
+          type: "Body Cream / Milk",
+          idealFor: "Ξηρό δέρμα & Καθημερινή χρήση όλο τον χρόνο",
+          characteristics: "Ισορροπημένη θρέψη και ενυδάτωση διαρκείας, βελούδινη αίσθηση.",
+          ingredients: "Βούτυρο Καριτέ (Shea Butter), Πανθενόλη B5, Βιταμίνη E",
+          badge: "Καθημερινή Φροντίδα",
+        },
+        {
+          type: "Body Balm / Butter",
+          idealFor: "Πολύ ξηρό / Ατοπικό δέρμα, Έκζεμα & Χειμώνας",
+          characteristics: "Πλούσια πυκνή υφή που δημιουργεί προστατευτικό φιλμ ενάντια στους εξωτερικούς ερεθισμούς.",
+          ingredients: "Κεραμίδια (Ceramides 1, 3, 6-II), Νιασιναμίδη, Ωμέγα 3-6-9, Λιπίδια",
+          badge: "Εντατική Θρέψη",
+        },
+        {
+          type: "Έλαιο Σώματος (Dry Oil)",
+          idealFor: "Θαμπό δέρμα, Σύσφιξη, Ραγάδες & Εγκυμοσύνη",
+          characteristics: "Χαρίζει λάμψη, ελαστικότητα και μεταξένια απαλότητα χωρίς κολλώδες τελείωμα.",
+          ingredients: "Έλαιο Argan, Αμυγδαλέλαιο, Έλαιο Jojoba, Εκχύλισμα Καλέντουλας",
+          badge: "Ελαστικότητα & Glow",
+        },
+      ],
+    },
+
+    // 3. Routine Selector / Φίλτρο ανά Ανάγκη (Routine by Skin Need)
+    skinTypesGuide: {
+      title: "Επίλεξε με βάση την Ανάγκη του Σώματός σου",
+      subtitle:
+        "Εξειδικευμένες φαρμακευτικές σειρές σχεδιασμένες για τις πιο συχνές και απαιτητικές δερματικές ανάγκες.",
+      types: [
+        {
+          id: "daily-hydration",
+          name: "Καθημερινή Ενυδάτωση & Λάμψη",
+          badge: "Κανονικό / Ξηρό Δέρμα",
+          keyIngredients: "Υαλουρονικό Οξύ, Γλυκερίνη, Προβιταμίνη B5 (Πανθενόλη), Κεραμίδια",
+          description:
+            "Καθημερινή φροντίδα για διατήρηση της βελούδινης απαλότητας, ελαστικότητας και προστασία από την περιβαλλοντική αφυδάτωση.",
+          routineSteps: [
+            "Καθαρισμός με απαλό αφρόλουτρο syndet ή ενυδατικό έλαιο ντους",
+            "Εφαρμογή ενυδατικής λοσιόν ή κρέμας εντός 3 λεπτών από το σκούπισμα",
+            "Απολέπιση με θαλάσσιο scrub 1 φορά την εβδομάδα για βελούδινη υφή",
+          ],
+          tip: "Ο κανόνας των 3 λεπτών: Απλώστε την κρέμα όσο το δέρμα είναι ακόμα ελαφρώς νωπό ώστε να σφραγιστεί η μέγιστη υγρασία.",
+          products: [
+            {
+              id: "bc-hyd-1",
+              name: "CeraVe Moisturising Lotion Ενυδατικό Γαλάκτωμα με Κεραμίδια 473ml",
+              brand: "CeraVe",
+              price: 13.9,
+              originalPrice: 17.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-hyd-2",
+              name: "Bepanthol Body Lotion Ενυδατικό Γαλάκτωμα Σώματος 400ml",
+              brand: "Bepanthol",
+              price: 14.5,
+              originalPrice: 18.9,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-hyd-3",
+              name: "Bioderma Atoderm Huile de Douche Έλαιο Καθαρισμού 1000ml",
+              brand: "Bioderma",
+              price: 16.8,
+              originalPrice: 22.0,
+              image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-hyd-4",
+              name: "Apivita Royal Honey Πλούσιο Body Butter Ενυδάτωσης 200ml",
+              brand: "Apivita",
+              price: 15.2,
+              originalPrice: 19.5,
+              image: "https://images.unsplash.com/photo-1567928805192-7f40f6bee1a3?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "atopic-eczema",
+          name: "Ατοπικό Δέρμα, Έκζεμα & Κνησμός",
+          badge: "Αναπλήρωση Λιπιδίων & Anti-Itch",
+          keyIngredients: "Κεραμίδια (Ceramides), Νιασιναμίδη, Βούτυρο Καριτέ, Aqua Posae Filiformis",
+          description:
+            "Πολύ ξηρό, σκασμένο δέρμα με επίμονο κνησμό (φαγούρα), ερεθισμούς και διαταραγμένο προστατευτικό φραγμό.",
+          routineSteps: [
+            "Καθαρισμός αποκλειστικά με καθαριστικό λάδι ή κρέμα κατά του κνησμού (χωρίς σαπούνι/άρωμα)",
+            "Στέγνωμα ταμποναριστά με απαλή βαμβακερή πετσέτα χωρίς τρίψιμο",
+            "Καθημερινή εφαρμογή μαλακτικού βαλσάμου αναπλήρωσης λιπιδίων (Lipid-Replenishing Balm) 1-2 φορές την ημέρα",
+          ],
+          tip: "Αποφύγετε το ζεστό νερό και τα μάλλινα ή συνθετικά ρούχα κατευθείαν πάνω στο δέρμα που πυροδοτούν τον κνησμό.",
+          products: [
+            {
+              id: "bc-atop-1",
+              name: "La Roche-Posay Lipikar Baume AP+M Επανορθωτικό Βάλσαμο Τριπλής Δράσης 400ml",
+              brand: "La Roche-Posay",
+              price: 19.5,
+              originalPrice: 25.0,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-atop-2",
+              name: "Bioderma Atoderm Intensive Baume Μαλακτικό Βάλσαμο κατά του Κνησμού 500ml",
+              brand: "Bioderma",
+              price: 18.9,
+              originalPrice: 24.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-atop-3",
+              name: "A-Derma Exomega Control Μαλακτική Κρέμα για Ατοπικό Δέρμα 400ml",
+              brand: "A-Derma",
+              price: 17.8,
+              originalPrice: 23.0,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-atop-4",
+              name: "La Roche-Posay Lipikar Syndet AP+ Κρέμα Καθαρισμού κατά των Ερεθισμών 400ml",
+              brand: "La Roche-Posay",
+              price: 14.8,
+              originalPrice: 19.0,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "strawberry-legs",
+          name: "Θυλακική Υπερκεράτωση («Strawberry Legs»)",
+          badge: "Λείανση με Ουρία & Σαλικυλικό",
+          keyIngredients: "Ουρία (Urea 10%-30%), Σαλικυλικό Οξύ (BHA), LHA, Κεραμίδια",
+          description:
+            "Τραχιά υφή «δέρματος κοτόπουλου» με κόκκινα ή σκούρα στίγματα στους θύλακες των τριχών σε μπράτσα, μηρούς και γάμπες.",
+          routineSteps: [
+            "Καθαρισμός με αφρίζον τζελ λείανσης που περιέχει σαλικυλικό οξύ",
+            "Καθημερινή εφαρμογή κρέμας με ουρία (10%) και σαλικυλικό οξύ για διάλυση των κεράτινων βυσμάτων",
+            "Σε πολύ έντονες τοπικές σκληρύνσεις (αγκώνες, γόνατα): εφαρμογή εξειδικευμένης κρέμας ουρίας 30%",
+          ],
+          tip: "Μην πιέζετε τα σπυράκια και αποφύγετε το στεγνό ξύρισμα με παλιά ξυραφάκια. Χρησιμοποιείτε πάντα τζελ ξυρίσματος.",
+          products: [
+            {
+              id: "bc-sa-1",
+              name: "CeraVe SA Smoothing Cream Κρέμα Λείανσης για Τραχύ Δέρμα 340g",
+              brand: "CeraVe",
+              price: 15.5,
+              originalPrice: 19.5,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-sa-2",
+              name: "CeraVe SA Smoothing Cleanser Τζελ Καθαρισμού Λείανσης 473ml",
+              brand: "CeraVe",
+              price: 14.9,
+              originalPrice: 18.9,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-sa-3",
+              name: "Uriage Keratosane 30 Gel-Cream Κρέμα Υψηλής Συγκέντρωσης Ουρίας 75ml",
+              brand: "Uriage",
+              price: 13.5,
+              originalPrice: 17.5,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-sa-4",
+              name: "Eucerin UreaRepair Plus Lotion 10% Ουρία για Εξαιρετικά Ξηρό Δέρμα 400ml",
+              brand: "Eucerin",
+              price: 18.5,
+              originalPrice: 23.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "cellulite-firming",
+          name: "Κυτταρίτιδα & Σύσφιξη",
+          badge: "Λεμφική Αποσυμφόρηση & Τόνωση",
+          keyIngredients: "Καφεΐνη, Εκχύλισμα Κισσού, Θαλάσσια Φύκη, Ρετινόλη, Centella Asiatica",
+          description:
+            "Όψη «φλοιού πορτοκαλιού», κατακράτηση υγρών στους ιστούς και απώλεια σφριγηλότητας σε μηρούς, γλουτούς και κοιλιά.",
+          routineSteps: [
+            "Dry brushing (στεγνό βούρτσισμα) με ανοδική κατεύθυνση πριν από το ντους",
+            "Απολέπιση με θαλάσσια άλατα (Thalasso Scrub) 2 φορές την εβδομάδα",
+            "Εφαρμογή κρέμας ή τζελ αδυνατίσματος με δυναμικό ανοδικό μασάζ πρωί και βράδυ",
+          ],
+          tip: "Η συνέπεια είναι το κλειδί: απαιτούνται τουλάχιστον 4 εβδομάδες καθημερινής εφαρμογής με ανοδικό μασάζ για ορατά αποτελέσματα λείανσης.",
+          products: [
+            {
+              id: "bc-cel-1",
+              name: "Elancyl Slim Design Night Φροντίδα Κατά της Κυτταρίτιδας 200ml",
+              brand: "Elancyl",
+              price: 24.5,
+              originalPrice: 32.0,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-cel-2",
+              name: "Geomar Thalasso Scrub Αναζωογονητικό Πίλινγκ Σώματος 600g",
+              brand: "Geomar",
+              price: 12.3,
+              originalPrice: 15.9,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-cel-3",
+              name: "Somatoline Cosmetic Slimming 7 Nights Εντατικό Gel Αδυνατίσματος 400ml",
+              brand: "Somatoline",
+              price: 36.9,
+              originalPrice: 48.0,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-cel-4",
+              name: "Frezyderm Triple Effect Cellulite Cream Κρέμα κατά της Κυτταρίτιδας 200ml",
+              brand: "Frezyderm",
+              price: 22.8,
+              originalPrice: 29.5,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "stretch-marks",
+          name: "Ραγάδες & Εγκυμοσύνη",
+          badge: "Ελαστικότητα & Πρόληψη",
+          keyIngredients: "Centella Asiatica, Έλαιο Αμυγδάλου, Βιταμίνη E, Υαλουρονικό Οξύ",
+          description:
+            "Πρόληψη και μείωση ραγάδων που προκαλούνται από απότομο τέντωμα του δέρματος στην εγκυμοσύνη, την εφηβεία ή αυξομειώσεις βάρους.",
+          routineSteps: [
+            "Εφαρμογή ειδικού ελαίου ή κρέμας 2 φορές την ημέρα σε κοιλιά, στήθος, μηρούς και γλουτούς",
+            "Κυκλικές κινήσεις μασάζ μέχρι την πλήρη απορρόφηση για ενίσχυση της παραγωγής ελαστίνης",
+            "Συνέχιση της εφαρμογής τουλάχιστον 3 μήνες μετά τον τοκετό",
+          ],
+          tip: "Οι νέες ροζ/κόκκινες ραγάδες ανταποκρίνονται άμεσα στη θεραπεία. Οι παλιές λευκές ραγάδες μόνο βελτιώνονται σε υφή. Η πρόληψη είναι το παν!",
+          products: [
+            {
+              id: "bc-str-1",
+              name: "Bio-Oil Skincare Oil Φυσικό Έλαιο για Ραγάδες & Ουλές 125ml",
+              brand: "Bio-Oil",
+              price: 14.8,
+              originalPrice: 19.5,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-str-2",
+              name: "Frezyderm Prevenstria Cream Κρέμα Πρόληψης Ραγάδων 150ml",
+              brand: "Frezyderm",
+              price: 18.5,
+              originalPrice: 24.5,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-str-3",
+              name: "Mustela Stretch Marks Cream Κρέμα Ραγάδων για Εγκύους 150ml",
+              brand: "Mustela",
+              price: 16.9,
+              originalPrice: 21.9,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "bc-str-4",
+              name: "Weleda Stretch Mark Massage Oil Έλαιο Μασάζ για Ραγάδες 100ml",
+              brand: "Weleda",
+              price: 17.5,
+              originalPrice: 22.9,
+              image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+      ],
+    },
+
+    // 4. Pro Tips & Τελετουργία Εφαρμογής (Micro-copy)
+    proTips: {
+      title: "Tips & Τελετουργία Εφαρμογής από τους Φαρμακοποιούς",
+      subtitle: "Μικρά επιστημονικά μυστικά που μεγιστοποιούν την αποτελεσματικότητα κάθε προϊόντος σώματος.",
+      tips: [
+        {
+          title: "Ο Κανόνας των 3 Λεπτών (The 3-Minute Rule)",
+          description:
+            "Εφαρμόστε την ενυδατική κρέμα ή το balm σώματος μέσα στα πρώτα 3 λεπτά από τη στιγμή που βγαίνετε από το ντους. Όσο η επιδερμίδα διατηρεί υγρασία, τα ενυδατικά λιπίδια παγιδεύουν το νερό στα βαθύτερα στρώματα, πολλαπλασιάζοντας την απορρόφηση κατά 70%.",
+          badge: "Χρυσός Κανόνας Ενυδάτωσης",
+        },
+        {
+          title: "Dry Brushing (Στεγνό Βούρτσισμα)",
+          description:
+            "Πριν μπείτε στο ντους, κάντε απαλό μασάζ με φυσική στεγνή βούρτσα σώματος με ανοδική κατεύθυνση προς την καρδιά. Διεγείρει τη λεμφική κυκλοφορία, απομακρύνει τα νεκρά κύτταρα και προετοιμάζει το δέρμα για την κρέμα κυτταρίτιδας.",
+          badge: "Λεμφική Αποσυμφόρηση",
+        },
+        {
+          title: "Σωστή Τεχνική Προϊόντων Αδυνατίσματος",
+          description:
+            "Εφαρμόζετε πάντα τα προϊόντα σύσφιξης και αδυνατίσματος με έντονες ανοδικές κυκλικές κινήσεις και «ζυμώματα» (palper-rouler). Χρειάζεται καθημερινή συνέπεια πρωί και βράδυ για τουλάχιστον 4 εβδομάδες για να ενεργοποιηθεί η λιπόλυση.",
+          badge: "Μέγιστη Απόδοση",
+        },
+        {
+          title: "Εξειδίκευση: Ευαίσθητη Περιοχή & Πόδια",
+          description:
+            "Μην χρησιμοποιείτε το κοινό αφρόλουτρο σώματος στην ευαίσθητη περιοχή (απαιτείται όξινο pH 3.5-5.0). Για τις σκασμένες πτέρνες, εφαρμόστε αλοιφή με 25-50% ουρία το βράδυ και φορέστε βαμβακερές κάλτσες για εντατική ανάπλαση.",
+          badge: "Ειδική Φροντίδα",
+        },
+      ],
+    },
+
+    // 5. Πλήρεις Υποενότητες Προϊόντων (Sub-sections with Correct Body Banners)
     subSections: [
       {
-        title: "Κορυφαία Προϊόντα Σώματος",
-        intro: "Φροντίστε το σώμα σας με δοκιμασμένες συνθέσεις από κορυφαία εργαστήρια.",
-        productHeading: "Προτεινόμενα Προϊόντα",
+        id: "daily-cleansing-hydration",
+        title: "1. Καθημερινός Καθαρισμός & Ενυδάτωση Σώματος",
+        image: "/categories/gia-to-swma-banner-category.webp",
+        intro:
+          "Διατηρήστε την επιδερμίδα σας βελούδινη, απαλή και ελαστική με καθαριστικά έλαια και ενυδατικές λοσιόν εμπλουτισμένες με κεραμίδια και βούτυρο καριτέ.",
+        productHeading: "Προτεινόμενα Προϊόντα Καθημερινής Φροντίδας",
         productGroups: [
           {
-            categoryTitle: "Καθαρισμός & Ενυδάτωση Σώματος",
+            categoryTitle: "Ενυδατικές Λοσιόν & Κρέμες Σώματος",
             products: [
               {
-                id: "bc-1",
+                id: "bc-pr-1",
+                name: "CeraVe Moisturising Lotion Ενυδατικό Γαλάκτωμα 473ml",
+                brand: "CeraVe",
+                price: 13.9,
+                originalPrice: 17.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-pr-2",
+                name: "Bepanthol Body Lotion Ενυδατικό Γαλάκτωμα Σώματος 400ml",
+                brand: "Bepanthol",
+                price: 14.5,
+                originalPrice: 18.9,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-pr-3",
+                name: "Apivita Royal Honey Πλούσιο Body Butter Ενυδάτωσης 200ml",
+                brand: "Apivita",
+                price: 15.2,
+                originalPrice: 19.5,
+                image: "https://images.unsplash.com/photo-1567928805192-7f40f6bee1a3?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Έλαια Ντους & Ήπιος Καθαρισμός",
+            products: [
+              {
+                id: "bc-pr-4",
                 name: "Bioderma Atoderm Huile de Douche Έλαιο Καθαρισμού 1000ml",
                 brand: "Bioderma",
                 price: 16.8,
                 originalPrice: 22.0,
-                image:
-                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
               {
-                id: "bc-2",
-                name: "Geomar Thalasso Scrub Αναζωογονητικό Πίλινγκ Σώματος 600g",
-                brand: "Geomar",
-                price: 12.3,
-                originalPrice: 15.9,
-                image:
-                  "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+                id: "bc-pr-5",
+                name: "La Roche-Posay Lipikar Huile Lavante AP+ Έλαιο Καθαρισμού 400ml",
+                brand: "La Roche-Posay",
+                price: 15.5,
+                originalPrice: 19.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "atopic-skin-section",
+        title: "2. Ατοπικό Δέρμα, Έκζεμα & Κνησμός (Lipid-Replenishing)",
+        image: "/categories/gia-to-swma-banner.webp",
+        intro:
+          "Κλινικά ελεγμένες συνθέσεις αναπλήρωσης λιπιδίων που καταπραΰνουν άμεσα το αίσθημα κνησμού και αποτρέπουν τις εξάρσεις ξηρότητας.",
+        productHeading: "Προϊόντα για Ατοπικό Δέρμα & Έκζεμα",
+        productGroups: [
+          {
+            categoryTitle: "Μαλακτικά Βάλσαμα (Balms) κατά του Κνησμού",
+            products: [
+              {
+                id: "bc-at-1",
+                name: "La Roche-Posay Lipikar Baume AP+M Επανορθωτικό Βάλσαμο 400ml",
+                brand: "La Roche-Posay",
+                price: 19.5,
+                originalPrice: 25.0,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-at-2",
+                name: "Bioderma Atoderm Intensive Baume Μαλακτικό Βάλσαμο 500ml",
+                brand: "Bioderma",
+                price: 18.9,
+                originalPrice: 24.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-at-3",
+                name: "A-Derma Exomega Control Μαλακτικό Βάλσαμο 400ml",
+                brand: "A-Derma",
+                price: 17.8,
+                originalPrice: 23.0,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "keratosis-strawberry-legs",
+        title: "3. Θυλακική Υπερκεράτωση («Strawberry Legs» / Rough & Bumpy)",
+        image: "/guide/guide-body-banner.webp",
+        intro:
+          "Συνδυασμός ουρίας και σαλικυλικού οξέος που διαλύει τα κεράτινα βύσματα, λειαίνει τα σπυράκια σε μπράτσα και πόδια και αποκαθιστά την απαλή υφή.",
+        productHeading: "Προϊόντα Λείανσης με Ουρία & Σαλικυλικό",
+        productGroups: [
+          {
+            categoryTitle: "Κρέμες & Τζελ Λείανσης",
+            products: [
+              {
+                id: "bc-sa-pr-1",
+                name: "CeraVe SA Smoothing Cream Κρέμα Λείανσης για Τραχύ Δέρμα 340g",
+                brand: "CeraVe",
+                price: 15.5,
+                originalPrice: 19.5,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-sa-pr-2",
+                name: "CeraVe SA Smoothing Cleanser Τζελ Καθαρισμού 473ml",
+                brand: "CeraVe",
+                price: 14.9,
+                originalPrice: 18.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-sa-pr-3",
+                name: "Uriage Keratosane 30 Gel-Cream Ουρία 30% για Έντονες Σκληρύνσεις 75ml",
+                brand: "Uriage",
+                price: 13.5,
+                originalPrice: 17.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "stretch-marks-firming",
+        title: "4. Ραγάδες, Σύσφιξη & Κυτταρίτιδα",
+        image: "/categories/gia-to-swma-banner-560x1000-1.1-520x460.webp",
+        intro:
+          "Ειδικά έλαια και συσφικτικές φόρμουλες που προλαμβάνουν τις ραγάδες στην εγκυμοσύνη και βελτιώνουν την όψη «φλοιού πορτοκαλιού».",
+        productHeading: "Έλαια Ραγάδων & Φροντίδα Κυτταρίτιδας",
+        productGroups: [
+          {
+            categoryTitle: "Πρόληψη & Αντιμετώπιση Ραγάδων",
+            products: [
+              {
+                id: "bc-st-1",
+                name: "Bio-Oil Skincare Oil Φυσικό Έλαιο για Ραγάδες & Ουλές 125ml",
+                brand: "Bio-Oil",
+                price: 14.8,
+                originalPrice: 19.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-st-2",
+                name: "Frezyderm Prevenstria Cream Κρέμα Πρόληψης Ραγάδων 150ml",
+                brand: "Frezyderm",
+                price: 18.5,
+                originalPrice: 24.5,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
           {
-            categoryTitle: "Ειδική Φροντίδα & Σύσφιξη",
+            categoryTitle: "Κυτταρίτιδα & Απολέπιση",
             products: [
               {
-                id: "bc-3",
+                id: "bc-st-3",
                 name: "Elancyl Slim Design Night Φροντίδα Κατά της Κυτταρίτιδας 200ml",
                 brand: "Elancyl",
                 price: 24.5,
                 originalPrice: 32.0,
-                image:
-                  "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-st-4",
+                name: "Geomar Thalasso Scrub Αναζωογονητικό Πίλινγκ Σώματος 600g",
+                brand: "Geomar",
+                price: 12.3,
+                originalPrice: 15.9,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "intimate-foot-care",
+        title: "5. Ευαίσθητη Περιοχή & Φροντίδα Ποδιών",
+        image: "/categories/gia-to-swma-banner-1.webp",
+        intro:
+          "Εξειδικευμένα καθαριστικά με κατάλληλο pH για την ευαίσθητη περιοχή και επανορθωτικές κρέμες με ουρία για σκασμένες πτέρνες.",
+        productHeading: "Προϊόντα Intimate & Foot Care",
+        productGroups: [
+          {
+            categoryTitle: "Υγιεινή Ευαίσθητης Περιοχής (pH 3.5 - 5.0)",
+            products: [
+              {
+                id: "bc-int-1",
+                name: "Lactacyd Pharma with Antibacterials Υγρό Καθαρισμού Ευαίσθητης Περιοχής 250ml",
+                brand: "Lactacyd",
+                price: 6.9,
+                originalPrice: 8.9,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-int-2",
+                name: "Apivita Daily Intimate Care Απαλό Υγρό με Χαμομήλι & Πρόπολη 300ml",
+                brand: "Apivita",
+                price: 8.5,
+                originalPrice: 11.2,
+                image: "https://images.unsplash.com/photo-1567928805192-7f40f6bee1a3?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Φροντίδα Ποδιών & Σκασμένες Πτέρνες",
+            products: [
+              {
+                id: "bc-ft-1",
+                name: "Hansaplast Cracked Heel Ointment Επανορθωτική Αλοιφή για Σκασμένες Πτέρνες 40g",
+                brand: "Hansaplast",
+                price: 6.5,
+                originalPrice: 8.5,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "bc-ft-2",
+                name: "Gehwol Med Lipidro Cream Κρέμα για Ξηρά & Σκασμένα Πόδια με Ουρία 75ml",
+                brand: "Gehwol",
+                price: 7.9,
+                originalPrice: 10.5,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
         ],
       },
     ],
+
+    // 6. FAQs για το Σώμα (Schema.org ready)
+    faqs: [
+      {
+        question: "Πώς αντιμετωπίζεται η θυλακική υπερκεράτωση («strawberry legs») στα πόδια και τα μπράτσα;",
+        answer:
+          "Η θυλακική υπερκεράτωση οφείλεται στη συσσώρευση κερατίνης στους θύλακες των τριχών. Αντιμετωπίζεται αποτελεσματικά με καθημερινή χρήση λοσιόν ή κρέμας που περιέχει Ουρία (10%) και Σαλικυλικό Οξύ (BHA). Αποφύγετε το επιθετικό τρίψιμο με λούφα, καθώς επιδεινώνει τη φλεγμονή.",
+      },
+      {
+        question: "Ποια είναι η διαφορά ανάμεσα σε λοσιόν σώματος, κρέμα και balm;",
+        answer:
+          "Η διαφορά έγκειται στην περιεκτικότητα σε νερό και έλαια. Η λοσιόν περιέχει περισσότερο νερό και απορροφάται άμεσα (ιδανική για κανονικό δέρμα και καλοκαίρι). Η κρέμα προσφέρει ισορροπημένη θρέψη. Το balm (βάλσαμο) έχει υψηλή περιεκτικότητα σε λιπίδια και κεραμίδια, δημιουργώντας προστατευτικό φιλμ που διαρκεί έως 48 ώρες (ιδανικό για ατοπικό δέρμα, έκζεμα και χειμώνα).",
+      },
+      {
+        question: "Μπορούν να εξαφανιστούν οι ραγάδες;",
+        answer:
+          "Οι πρόσφατες ραγάδες (κόκκινες ή ροζ χρώματος) έχουν ενεργή αγγείωση και μπορούν να μειωθούν θεαματικά με ειδικά έλαια (Bio-Oil) ή κρέμες με Centella Asiatica και υαλουρονικό οξύ. Οι παλιές λευκές ραγάδες είναι ουλές του χορίου και μπορούν μόνο να βελτιωθούν σε υφή, όχι να εξαλειφθούν πλήρως. Γι' αυτό η έγκαιρη πρόληψη στην εγκυμοσύνη είναι καθοριστική.",
+      },
+      {
+        question: "Γιατί δεν πρέπει να χρησιμοποιώ το κοινό αφρόλουτρο στην ευαίσθητη περιοχή;",
+        answer:
+          "Η ευαίσθητη περιοχή έχει όξινο pH (3.5 – 5.0) και αποικίζεται από προστατευτικούς γαλακτοβάκιλλους. Το κοινό αφρόλουτρο έχει αλκαλικό ή ουδέτερο pH και έντονα αρώματα που καταστρέφουν τη φυσική χλωρίδα, αυξάνοντας δραματικά τον κίνδυνο μυκητιάσεων και κολπίτιδας.",
+      },
+      {
+        question: "Πώς επουλώνονται γρήγορα οι βαθιά σκασμένες πτέρνες;",
+        answer:
+          "Εφαρμόστε το βράδυ ειδική επανορθωτική αλοιφή με υψηλή περιεκτικότητα σε ουρία (25%-50%) ή πανθενόλη. Φορέστε βαμβακερές κάλτσες κατά τη διάρκεια του ύπνου για να δημιουργήσετε περιβάλλον εντατικής ενυδάτωσης. Σε 3-5 ημέρες το σκληρό δέρμα μαλακώνει και οι ρωγμές επουλώνονται.",
+      },
+    ],
+
+    // 7. Lead Generation / Pharmacist Consultation Call-to-Action
+    pharmacistCta: {
+      badge: "Δωρεάν Συμβουλή Φαρμακοποιού",
+      title: "Αντιμετωπίζεις επίμονη ξηρότητα, κνησμό ή δερματική ευαισθησία;",
+      subtitle:
+        "Η επιστημονική ομάδα του ProPharmacy είναι δίπλα σου για να αξιολογήσει τις ανάγκες του σώματός σου και να σου προτείνει το ακριβές θεραπευτικό πρωτόκολλο φαρμακείου.",
+      phone: "210 1234567",
+      buttonText: "Κάλεσε τον Φαρμακοποιό (Δωρεάν)",
+      note: "Δευτέρα – Παρασκευή 09:00 – 21:00 · Σάββατο 09:00 – 15:00",
+    },
+
+    // 8. Medical Disclaimer
+    disclaimer:
+      "ΔΕΡΜΑΤΟΛΟΓΙΚΗ ΕΠΙΣΗΜΑΝΣΗ: Οι συμβουλές και τα προτεινόμενα προϊόντα του παρόντος οδηγού έχουν ενημερωτικό χαρακτήρα. Σε περιπτώσεις οξείας ατοπικής δερματίτιδας με εκροή υγρού, ανοιχτών πληγών από έντονο κνησμό ή υποψίας μυκητιασικής μόλυνσης, συνιστάται άμεση κλινική εκτίμηση από δερματολόγο για πιθανή συνταγογράφηση τοπικών φαρμακευτικών σκευασμάτων.",
   },
 
   "hair-care": {
     slug: "hair-care",
-    title: "Οδηγός Περιποίησης Μαλλιών",
+    title: "Οδηγός Περιποίησης & Υγείας Μαλλιών",
     breadcrumb: "Περιποίηση Μαλλιών",
-    headerBannerImage:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
-    featuredImage:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80",
-    introHeading: "Υγιή, Δυνατά & Λαμπερά Μαλλιά",
+    headerBannerImage: "/categories/gia-ta-mallia-banner-category.webp",
+    featuredImage: "/categories/gia-ta-mallia-banner-560x1000-1-520x460.webp",
+    introHeading: "Ολοκληρωμένος Οδηγός Περιποίησης & Υγείας Μαλλιών",
     introText:
-      "Τα όμορφα μαλλιά ξεκινούν από ένα υγιές τριχωτό. Είτε αντιμετωπίζετε εποχική τριχόπτωση, είτε ξηρότητα και φθορά, ο σωστός συνδυασμός σαμπουάν, μάσκας και εξειδικευμένων συμπληρωμάτων προσφέρει άμεσα αποτελέσματα.",
+      "Από την αντιμετώπιση της εποχικής και χρόνιας τριχόπτωσης, έως τη θεραπεία της πιτυρίδας, της σμηγματορροϊκής δερματίτιδας και της λιπαρότητας, η ομάδα φαρμακοποιών του ProPharmacy συγκέντρωσε τα κορυφαία επιστημονικά πρωτόκολλα για πυκνά, δυνατά και υγιή μαλλιά από τη ρίζα έως τις άκρες.",
+    quizEnabled: true,
+
+    // 1. Βασικοί Άξονες Φροντίδας Μαλλιών
     sections: [
       {
         number: "1.",
-        title: "Σωστή Επιλογή Σαμπουάν",
+        title: "Στοχευμένος Καθαρισμός & Ο Κανόνας των 2 Λουσιμάτων",
         items: [
-          "Στόχευση στο τριχωτό: Επιλέξτε σαμπουάν με βάση τις ανάγκες της ρίζας (λιπαρότητα, ξηροδερμία, τριχόπτωση).",
-          "Ήπιο λούσιμο: Μην τρίβετε επιθετικά το τριχωτό· κάντε απαλό μασάζ με τις άκρες των δαχτύλων.",
+          "Στόχευση στο τριχωτό: Το σαμπουάν επιλέγεται πάντα με βάση τις ανάγκες του τριχωτού (λιπαρότητα, πιτυρίδα, τριχόπτωση) και όχι των μηκών.",
+          "Ο κανόνας των 2 λουσιμάτων: Το 1ο χέρι καθαρίζει το σμήγμα και τους περιβαλλοντικούς ρύπους. Το 2ο χέρι επιτρέπει στα ενεργά συστατικά να απορροφηθούν, παραμένοντας για 1-2 λεπτά.",
         ],
       },
       {
         number: "2.",
-        title: "Θρέψη & Επανόρθωση",
+        title: "Επανόρθωση, Θρέψη & Θερμοπροστασία",
         items: [
-          "Conditioner σε κάθε λούσιμο: Εφαρμόστε μόνο σε μήκη και άκρες για ξεμπέρδεμα και προστασία.",
-          "Εντατική μάσκα 1 φορά την εβδομάδα: Με κερατίνη, φυτικά έλαια ή αμινοξέα για βαθιά αναδόμηση.",
+          "Conditioner σε κάθε λούσιμο: Εφαρμόζεται αποκλειστικά από το μέσο έως τις άκρες. Δεν εφαρμόζεται ποτέ στο τριχωτό για να μη βαραίνει τη ρίζα.",
+          "Μάσκα εντατικής αναδόμησης & θερμοπροστασία: 1-2 φορές την εβδομάδα με κερατίνη και φυτικά ceramides, σε συνδυασμό με ορό θερμοπροστασίας πριν από πιστολάκι ή πρέσα.",
         ],
       },
       {
         number: "3.",
-        title: "Αντιμετώπιση Τριχόπτωσης",
+        title: "Ολοκληρωμένο Πρωτόκολλο Τριχόπτωσης (3 Βήματα)",
         items: [
-          "Εποχική ή χρόνια: Εντοπίστε την αιτία (στρες, διατροφή, ορμονικές αλλαγές) με τη βοήθεια ειδικού.",
-          "Συνδυαστική δράση: Δυναμωτικό σαμπουάν, λοσιόν τριχωτού και συμπλήρωμα με βιοτίνη και ψευδάργυρο.",
+          "Συνδυαστική δράση 360°: Η τριχόπτωση δεν αντιμετωπίζεται μόνο με ένα σαμπουάν. Απαιτείται συνδυασμός δυναμωτικού σαμπουάν, τοπικής λοσιόν/αμπούλας και διατροφικού συμπληρώματος.",
+          "Συνέπεια 3 μηνών: Ο κύκλος αναγέννησης του θύλακα διαρκεί τουλάχιστον 12 εβδομάδες. Μια αγωγή πρέπει να τηρείται σταθερά για πλήρη αποτελεσματικότητα.",
         ],
       },
       {
         number: "4.",
-        title: "Προστασία από Θερμότητα",
+        title: "Εξειδικευμένη Φροντίδα Τριχωτού (Πιτυρίδα & Σμήγμα)",
         items: [
-          "Θερμοπροστατευτικά σπρέι/έλαια: Απαραίτητα πριν από πιστολάκι ή πρέσα ισιώματος.",
-          "Στέγνωμα με μέτρο: Χαμηλή θερμοκρασία για αποφυγή σπασίματος και ψαλίδας.",
+          "Στοχευμένη θεραπεία: Η λιπαρή πιτυρίδα οφείλεται στον μύκητα Malassezia και χρειάζεται αντιμυκητιασικά (Selenium Disulfide, Ciclopirox Olamine), ενώ η ξηροδερμία απαιτεί ενυδάτωση και καταπράυνση.",
+          "Χλιαρό νερό: Το καυτό νερό ερεθίζει τους σμηγματογόνους αδένες, προκαλώντας αντιδραστική υπερέκκριση σμήγματος και επιδείνωση της πιτυρίδας.",
         ],
       },
     ],
+
+    // 2. Πρακτικός Συγκριτικός Οδηγός: «Πιτυρίδα ή Ξηροδερμία;»
+    dandruffComparison: {
+      title: "Πιτυρίδα ή Ξηροδερμία; Οδηγός Διάγνωσης & Θεραπείας",
+      subtitle:
+        "Ένας από τους συχνότερους λόγους αποτυχίας της θεραπείας είναι η λάθος επιλογή σαμπουάν. Εντοπίστε τα συμπτώματα και επιλέξτε τη σωστή φαρμακευτική αγωγή.",
+      rows: [
+        {
+          symptom: "Μορφή νιφάδων",
+          dryScalp: "Μικρές, λευκές, ξηρές νιφάδες που πέφτουν εύκολα στους ώμους (σαν σκόνη).",
+          oilyDandruff: "Μεγαλύτερες, κιτρινωπές, παχιές φολίδες που κολλούν στο τριχωτό και στις ρίζες.",
+        },
+        {
+          symptom: "Αίσθηση στο κεφάλι",
+          dryScalp: "Έντονο τράβηγμα, αίσθηση αφυδάτωσης, ξηρότητα και ήπιος διάσπαρτος κνησμός.",
+          oilyDandruff: "Έντονη λιπαρότητα, ερυθρότητα, τοπική φλεγμονή και επίμονος, έντονος κνησμός.",
+        },
+        {
+          symptom: "Βασική αιτία",
+          dryScalp: "Απογύμνωση υδρολιπιδικού φραγμού από ξηρό καιρό, καυτό νερό ή επιθετικά σαμπουάν.",
+          oilyDandruff: "Υπερπολλαπλασιασμός του μύκητα Malassezia σε περιβάλλον περίσσειας σμήγματος.",
+        },
+        {
+          symptom: "Τι χρειάζεστε",
+          dryScalp: "Ήπιο ενυδατικό σαμπουάν χωρίς sulfates, φυσικά έλαια, θρέψη και καταπράυνση.",
+          oilyDandruff: "Αντιμυκητιασικό σαμπουάν με Selenium Disulfide 1%, Piroctone Olamine & Σαλικυλικό Οξύ.",
+        },
+      ],
+      dryScalpRec: {
+        badge: "Πρόταση για Ξηροδερμία",
+        title: "Apivita Σαμπουάν κατά της Ξηροδερμίας με Σέλερι & Πρόπολη 250ml",
+        description:
+          "Ενυδατώνει βαθιά το ξηρό τριχωτό, απομακρύνει τα νεκρά κύτταρα και ανακουφίζει άμεσα από το τράβηγμα και τη φαγούρα με 85% φυσικά συστατικά.",
+        product: {
+          id: "hc-rec-dry",
+          name: "Apivita Σαμπουάν κατά της Ξηροδερμίας με Σέλερι & Πρόπολη 250ml",
+          brand: "Apivita",
+          price: 11.5,
+          originalPrice: 14.9,
+          image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+        },
+      },
+      oilyDandruffRec: {
+        badge: "Πρόταση για Λιπαρή Πιτυρίδα",
+        title: "Vichy Dercos Anti-Dandruff DS Σαμπουάν για Λιπαρά Μαλλιά 390ml",
+        description:
+          "Κλινικά αποδεδειγμένη δράση με Selenium Disulfide και Σαλικυλικό Οξύ. Εξαλείφει το 100% των ορατών νιφάδων από την 1η κιόλας εφαρμογή με 6 εβδομάδες αντιυποτροπής.",
+        product: {
+          id: "hc-rec-dand",
+          name: "Vichy Dercos Anti-Dandruff DS Σαμπουάν για Λιπαρά Μαλλιά 390ml",
+          brand: "Vichy",
+          price: 16.8,
+          originalPrice: 21.5,
+          image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+        },
+      },
+    },
+
+    // 3. Το Ολοκληρωμένο Πρωτόκολλο Τριχόπτωσης (Routine Bundle 1-2-3)
+    hairLossProtocol: {
+      title: "Το Ολοκληρωμένο Πρωτόκολλο Τριχόπτωσης 360°",
+      subtitle:
+        "Η επιστημονική συνδυαστική θεραπεία 3 βημάτων που διεγείρει τον θύλακα, σταματά την τριχόπτωση και πολλαπλασιάζει την πυκνότητα των μαλλιών.",
+      badge: "Κλινικό Πρωτόκολλο 1-2-3",
+      bundlePrice: 68.9,
+      originalPrice: 94.0,
+      steps: [
+        {
+          stepNumber: 1,
+          stepTitle: "Βήμα 1: Καθαρισμός & Προετοιμασία",
+          action:
+            "Λούσιμο με δυναμωτικό σαμπουάν ενδυνάμωσης και κυκλικό μασάζ για 2 λεπτά ώστε να τονωθεί η μικροκυκλοφορία του θύλακα.",
+          timing: "2-3 φορές την εβδομάδα",
+          product: {
+            id: "hc-prot-1",
+            name: "Ducray Anaphase+ Δυναμωτικό Σαμπουάν Τριχόπτωσης 400ml",
+            brand: "Ducray",
+            price: 14.2,
+            originalPrice: 18.9,
+            image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+          },
+        },
+        {
+          stepNumber: 2,
+          stepTitle: "Βήμα 2: Εντατική Τοπική Αγωγή",
+          action:
+            "Εφαρμογή λοσιόν ή αμπούλας Aminexil απευθείας στο τριχωτό με ειδικό απλικατέρ (χωρίς ξέβγαλμα). Αποτρέπει τη σκλήρυνση του κολλαγόνου γύρω από τη ρίζα.",
+          timing: "Καθημερινά ή 3 φορές/εβδομάδα",
+          product: {
+            id: "hc-prot-2",
+            name: "Vichy Dercos Aminexil Clinical 5 Εντατική Αγωγή Τριχόπτωσης 21 Αμπούλες",
+            brand: "Vichy",
+            price: 42.5,
+            originalPrice: 56.0,
+            image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+          },
+        },
+        {
+          stepNumber: 3,
+          stepTitle: "Βήμα 3: Εσωτερική Ενίσχυση",
+          action:
+            "Λήψη συμπληρώματος διατροφής με κυστίνη, βιοτίνη, ψευδάργυρο, σίδηρο και βιταμίνες Β για βαθιά θρέψη του θύλακα εκ των έσω.",
+          timing: "2 κάψουλες καθημερινά μετά το γεύμα για 3 μήνες",
+          product: {
+            id: "hc-prot-3",
+            name: "Priorin Extra Συμπλήρωμα Κατά της Τριχόπτωσης 60 Κάψουλες",
+            brand: "Priorin",
+            price: 24.5,
+            originalPrice: 32.0,
+            image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+          },
+        },
+      ],
+    },
+
+    // 4. Routine Selector / Φίλτρο ανά Ανάγκη (Hair Needs)
+    skinTypesGuide: {
+      title: "Επίλεξε με βάση την Ανάγκη των Μαλλιών σου",
+      subtitle:
+        "Ολοκληρωμένα πρωτόκολλα φροντίδας σχεδιασμένα για τις πιο συχνές προκλήσεις του τριχωτού και των μαλλιών.",
+      types: [
+        {
+          id: "hair-loss",
+          name: "Τριχόπτωση & Ενδυνάμωση",
+          badge: "Εποχική & Χρόνια",
+          keyIngredients: "Aminexil, Βιοτίνη, Κυστίνη, Ψευδάργυρος, Βιταμίνη B6, Νιασιναμίδη",
+          description:
+            "Αραίωση, αποδυνάμωση του θύλακα, εποχική έντονη τριχόπτωση (>100 τρίχες/ημέρα) ή απώλεια όγκου και πυκνότητας.",
+          routineSteps: [
+            "Καθαρισμός με δυναμωτικό σαμπουάν Anaphase+ ή Dercos Energy+",
+            "Εφαρμογή τοπικής αγωγής με αμπούλες Aminexil Clinical 5 απευθείας στις ρίζες",
+            "Καθημερινή λήψη συμπληρώματος Priorin Extra ή Cystiphane για 3 μήνες",
+          ],
+          tip: "Ο κύκλος ζωής της τρίχας απαιτεί υπομονή: τα πρώτα ουσιαστικά αποτελέσματα νέας φύτρωσης γίνονται ορατά μετά την 6η-8η εβδομάδα.",
+          products: [
+            {
+              id: "hc-hl-1",
+              name: "Ducray Anaphase+ Δυναμωτικό Σαμπουάν Τριχόπτωσης 400ml",
+              brand: "Ducray",
+              price: 14.2,
+              originalPrice: 18.9,
+              image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-hl-2",
+              name: "Vichy Dercos Aminexil Clinical 5 Εντατική Αγωγή 21 Αμπούλες",
+              brand: "Vichy",
+              price: 42.5,
+              originalPrice: 56.0,
+              image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-hl-3",
+              name: "Priorin Extra Συμπλήρωμα Κατά της Τριχόπτωσης 60 Κάψουλες",
+              brand: "Priorin",
+              price: 24.5,
+              originalPrice: 32.0,
+              image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-hl-4",
+              name: "Bailleul Cystiphane Biorga Συμπλήρωμα για Μαλλιά & Νύχια 120 Δισκία",
+              brand: "Bailleul",
+              price: 22.8,
+              originalPrice: 29.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "dandruff-scalp",
+          name: "Πιτυρίδα & Σμηγματορροϊκή Δερματίτιδα",
+          badge: "Αντιμυκητιασική Δράση",
+          keyIngredients: "Selenium Disulfide 1%, Σαλικυλικό Οξύ, Ciclopirox Olamine, Piroctone Olamine",
+          description:
+            "Ορατές νιφάδες (λευκές ή κίτρινες), ερυθρότητα, κνησμός και απολέπιση στο τριχωτό της κεφαλής.",
+          routineSteps: [
+            "Θεραπευτικό λούσιμο με Dercos Anti-Dandruff DS ή Kerium DS (αφήστε 2 λεπτά να δράσει)",
+            "Εφαρμογή 2-3 φορές την εβδομάδα για 4 εβδομάδες στη φάση εφόδου",
+            "Συντήρηση με ήπιο εξισορροπητικό σαμπουάν ενδιάμεσα για αποφυγή υποτροπής",
+          ],
+          tip: "Μην ξύνετε το τριχωτό με τα νύχια, καθώς δημιουργούνται μικροτραυματισμοί που επιδεινώνουν τη μόλυνση και τη φλεγμονή.",
+          products: [
+            {
+              id: "hc-ds-1",
+              name: "Vichy Dercos Anti-Dandruff DS Σαμπουάν για Λιπαρά Μαλλιά 390ml",
+              brand: "Vichy",
+              price: 16.8,
+              originalPrice: 21.5,
+              image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-ds-2",
+              name: "La Roche-Posay Kerium DS Εντατικό Σαμπουάν κατά της Πιτυρίδας 125ml",
+              brand: "La Roche-Posay",
+              price: 13.9,
+              originalPrice: 17.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-ds-3",
+              name: "Apivita Σαμπουάν κατά της Ξηροδερμίας με Σέλερι & Πρόπολη 250ml",
+              brand: "Apivita",
+              price: 11.5,
+              originalPrice: 14.9,
+              image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-ds-4",
+              name: "Ducray Kelual DS Καταπραϋντική Κρέμα για Τριχωτό & Πρόσωπο 40ml",
+              brand: "Ducray",
+              price: 12.9,
+              originalPrice: 16.5,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "dry-damaged",
+          name: "Ξηρά, Ταλαιπωρημένα & Βαμμένα Μαλλιά",
+          badge: "Θρέψη & Αναδόμηση",
+          keyIngredients: "Κερατίνη Φυτικής Προέλευσης, Βούτυρο Cupuacu, Υαλουρονικό, Έλαιο Argan",
+          description:
+            "Τραχιές άκρες, ψαλίδα, σπάσιμο κατά το βούρτσισμα και απώλεια λάμψης από τεχνικές εργασίες και θερμικά εργαλεία.",
+          routineSteps: [
+            "Καθαρισμός με θρεπτικό σαμπουάν αναδόμησης χωρίς θειικά άλατα",
+            "Εφαρμογή conditioner Keratin Repair σε κάθε λούσιμο για ξεμπέρδεμα",
+            "Εντατική μάσκα Cupuacu 1 φορά την εβδομάδα & ορός θερμοπροστασίας πριν το πιστολάκι",
+          ],
+          tip: "Ταμπονάρετε τα μαλλιά με πετσέτα μικροϊνών. Μην τα τρίβετε έντονα, γιατί η βρεγμένη τρίχα είναι 3 φορές πιο ευάλωτη στο σπάσιμο.",
+          products: [
+            {
+              id: "hc-dd-1",
+              name: "Klorane Μάσκα με Βούτυρο Cupuacu για Ξηρά & Ταλαιπωρημένα Μαλλιά 150ml",
+              brand: "Klorane",
+              price: 12.5,
+              originalPrice: 16.0,
+              image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-dd-2",
+              name: "Apivita Keratin Repair Conditioner Επανόρθωσης με Μέλι & Κερατίνη 150ml",
+              brand: "Apivita",
+              price: 11.9,
+              originalPrice: 15.5,
+              image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-dd-3",
+              name: "Phyto Phytokeratine Serum Θερμοπροστασίας & Επανόρθωσης 100ml",
+              brand: "Phyto",
+              price: 17.5,
+              originalPrice: 23.0,
+              image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-dd-4",
+              name: "Rene Furterer Absolue Keratine Ανανεωτική Μάσκα Υπέρτατης Θρέψης 200ml",
+              brand: "Rene Furterer",
+              price: 31.5,
+              originalPrice: 42.0,
+              image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+        {
+          id: "oily-frequent",
+          name: "Λιπαρότητα & Συχνό / Καθημερινό Λούσιμο",
+          badge: "Ρύθμιση Σμήγματος",
+          keyIngredients: "Εκχύλισμα Τσουκνίδας, Πρόπολη, Δεντρολίβανο, Γάλα Βρώμης, Ψευδάργυρος PCA",
+          description:
+            "Λιπαρές ρίζες που «λαδώνουν» μέσα σε 24 ώρες, βαριά μαλλιά χωρίς όγκο και ανάγκη για καθημερινό καθαρισμό.",
+          routineSteps: [
+            "Λούσιμο με σμηγματορρυθμιστικό σαμπουάν τσουκνίδας 2 φορές την εβδομάδα",
+            "Ενδιάμεσα λουσίματα με εξαιρετικά απαλό σαμπουάν καθημερινής χρήσης με γάλα βρώμης",
+            "Χρήση ξηρού σαμπουάν (Dry Shampoo) στις ρίζες για επιμήκυνση του χρόνου μεταξύ των λουσιμάτων",
+          ],
+          tip: "Όσο πιο επιθετικά λούζεστε για να διώξετε τη λιπαρότητα, τόσο περισσότερο σμήγμα παράγει το τριχωτό ως αντίδραση άμυνας. Επιλέξτε ήπιες συνθέσεις.",
+          products: [
+            {
+              id: "hc-of-1",
+              name: "Klorane Σαμπουάν με Εκχύλισμα Τσουκνίδας για Λιπαρά Μαλλιά 400ml",
+              brand: "Klorane",
+              price: 12.8,
+              originalPrice: 16.5,
+              image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-of-2",
+              name: "Apivita Σαμπουάν Εξισορρόπησης Λιπαρότητας με Πρόπολη & Δεντρολίβανο 250ml",
+              brand: "Apivita",
+              price: 11.2,
+              originalPrice: 14.5,
+              image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-of-3",
+              name: "Klorane Εξαιρετικά Απαλό Σαμπουάν με Γάλα Βρώμης για Συχνό Λούσιμο 400ml",
+              brand: "Klorane",
+              price: 12.5,
+              originalPrice: 15.9,
+              image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80",
+            },
+            {
+              id: "hc-of-4",
+              name: "Apivita Καθημερινό Σαμπουάν με Χαμομήλι & Μέλι 250ml",
+              brand: "Apivita",
+              price: 10.9,
+              originalPrice: 13.9,
+              image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+            },
+          ],
+        },
+      ],
+    },
+
+    // 5. Pro Tips & Τελετουργία Εφαρμογής (Micro-copy)
+    proTips: {
+      title: "Tips & Τελετουργία Εφαρμογής από τους Φαρμακοποιούς",
+      subtitle: "Μικρά επιστημονικά μυστικά για να μεγιστοποιήσετε την αποτελεσματικότητα των θεραπειών μαλλιών.",
+      tips: [
+        {
+          title: "Ο Κανόνας των 2 Λουσιμάτων",
+          description:
+            "Το πρώτο χέρι σαμπουάν απομακρύνει σμήγμα, σκόνη και προϊόντα styling. Το δεύτερο χέρι είναι αυτό που επιτρέπει στα θεραπευτικά ενεργά συστατικά να δράσουν. Αφήστε τον αφρό να σταθεί για 1-2 λεπτά πριν ξεβγάλετε.",
+          badge: "Χρυσός Κανόνας Λουσίματος",
+        },
+        {
+          title: "Φυσιολογικός Κύκλος: 50-100 Τρίχες/Ημέρα",
+          description:
+            "Η απώλεια 50 έως 100 τριχών καθημερινά στο λούσιμο και το βούρτσισμα είναι απόλυτα φυσιολογικό στάδιο τελογενούς ανανέωσης. Εάν παρατηρείτε πάνω από 150 τρίχες για διάστημα άνω των 8 εβδομάδων, ξεκινήστε αγωγή 3 βημάτων.",
+          badge: "Διάγνωση Τριχόπτωσης",
+        },
+        {
+          title: "Σωστή Τοποθέτηση Conditioner & Μάσκας",
+          description:
+            "Εφαρμόζετε μάσκες και μαλακτικές κρέμες αποκλειστικά από το ύψος των αυτιών και κάτω, ποτέ στη ρίζα. Η εφαρμογή στο τριχωτό φράζει τους πόρους, επιβαρύνει τους σμηγματογόνους αδένες και στερεί τον φυσικό όγκο.",
+          badge: "Προστασία Ρίζας",
+        },
+        {
+          title: "Μασάζ Τριχωτού με τις Ρώγες των Δακτύλων",
+          description:
+            "Κάντε απαλό κυκλικό μασάζ στο τριχωτό για 2 λεπτά κατά την εφαρμογή λοσιόν ή σαμπουάν. Αυξάνει τη ροή αίματος προς τον θύλακα, βελτιώνοντας την απορρόφηση των ενεργών συστατικών κατά 40%.",
+          badge: "Μικροκυκλοφορία",
+        },
+      ],
+    },
+
+    // 6. Πλήρεις Υποενότητες Προϊόντων (Sub-sections with Correct Hair Banners)
     subSections: [
       {
-        title: "Προτεινόμενα Προϊόντα Μαλλιών",
+        id: "hair-loss-section",
+        title: "1. Τριχόπτωση, Ενδυνάμωση & Τόνωση Ρίζας",
+        image: "/categories/gia-ta-mallia-banner-category.webp",
         intro:
-          "Εξειδικευμένες συνθέσεις φαρμακείου για δύναμη, όγκο και λάμψη από τη ρίζα ως τις άκρες.",
-        productHeading: "Ενδεικτικά Προϊόντα",
+          "Κλινικά ελεγμένες τοπικές αγωγές, δυναμωτικά σαμπουάν και στοχευμένα διατροφικά συμπληρώματα για αναχαίτιση της τριχόπτωσης και αύξηση της πυκνότητας.",
+        productHeading: "Προτεινόμενα Προϊόντα Κατά της Τριχόπτωσης",
         productGroups: [
           {
-            categoryTitle: "Τριχόπτωση & Ενδυνάμωση",
+            categoryTitle: "Δυναμωτικά Σαμπουάν Τριχόπτωσης",
             products: [
               {
-                id: "hc-1",
+                id: "hc-sec-1",
                 name: "Ducray Anaphase+ Δυναμωτικό Σαμπουάν Τριχόπτωσης 400ml",
                 brand: "Ducray",
                 price: 14.2,
                 originalPrice: 18.9,
-                image:
-                  "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
               },
               {
-                id: "hc-2",
-                name: "Vichy Dercos Δυναμωτικό Σαμπουάν με Aminexil 400ml",
+                id: "hc-sec-2",
+                name: "Vichy Dercos Energy+ Δυναμωτικό Σαμπουάν με Aminexil 400ml",
                 brand: "Vichy",
                 price: 15.5,
                 originalPrice: 19.9,
-                image:
-                  "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
           {
-            categoryTitle: "Ενυδάτωση & Μάσκες",
+            categoryTitle: "Εντατικές Τοπικές Αγωγές & Αμπούλες",
             products: [
               {
-                id: "hc-3",
-                name: "Klorane Μάσκα με Βούτυρο Cupuacu για Ξηρά Μαλλιά 150ml",
+                id: "hc-sec-3",
+                name: "Vichy Dercos Aminexil Clinical 5 Εντατική Αγωγή 21 Αμπούλες",
+                brand: "Vichy",
+                price: 42.5,
+                originalPrice: 56.0,
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-4",
+                name: "Ducray Neoptide Expert Διπλή Λοσιόν κατά της Χρόνιας Τριχόπτωσης 2x50ml",
+                brand: "Ducray",
+                price: 36.8,
+                originalPrice: 48.0,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Συμπληρώματα Διατροφής για Μαλλιά",
+            products: [
+              {
+                id: "hc-sec-5",
+                name: "Priorin Extra Συμπλήρωμα Κατά της Τριχόπτωσης 60 Κάψουλες",
+                brand: "Priorin",
+                price: 24.5,
+                originalPrice: 32.0,
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-6",
+                name: "Bailleul Cystiphane Biorga Συμπλήρωμα για Μαλλιά & Νύχια 120 Δισκία",
+                brand: "Bailleul",
+                price: 22.8,
+                originalPrice: 29.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "dandruff-scalp-section",
+        title: "2. Πιτυρίδα, Ξηροδερμία & Σμηγματορροϊκή Δερματίτιδα",
+        image: "/categories/gia-ta-mallia-banner-560x1000-1-520x460.webp",
+        intro:
+          "Ιατροτεχνολογικά και δερμοκαλλυντικά σαμπουάν με Selenium Disulfide και Ciclopirox Olamine που εξαλείφουν τις νιφάδες και ανακουφίζουν άμεσα από τον κνησμό.",
+        productHeading: "Προϊόντα για Πιτυρίδα & Τριχωτό",
+        productGroups: [
+          {
+            categoryTitle: "Θεραπευτικά Σαμπουάν Πιτυρίδας",
+            products: [
+              {
+                id: "hc-sec-7",
+                name: "Vichy Dercos Anti-Dandruff DS Σαμπουάν για Λιπαρά Μαλλιά 390ml",
+                brand: "Vichy",
+                price: 16.8,
+                originalPrice: 21.5,
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-8",
+                name: "La Roche-Posay Kerium DS Εντατικό Σαμπουάν κατά της Πιτυρίδας 125ml",
+                brand: "La Roche-Posay",
+                price: 13.9,
+                originalPrice: 17.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-9",
+                name: "Apivita Σαμπουάν κατά της Ξηροδερμίας με Σέλερι & Πρόπολη 250ml",
+                brand: "Apivita",
+                price: 11.5,
+                originalPrice: 14.9,
+                image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "nourish-repair-section",
+        title: "3. Ενυδάτωση, Αναδόμηση & Θερμοπροστασία",
+        image: "/guide/back-view-woman-with-towel-head-applying-cream-skin.jpg",
+        intro:
+          "Πλούσιες μάσκες θρέψης με βούτυρο Cupuacu, μαλακτικά conditioners κερατίνης και οροί θερμοπροστασίας για μεταξένια απαλότητα χωρίς σπάσιμο.",
+        productHeading: "Προϊόντα Θρέψης & Προστασίας",
+        productGroups: [
+          {
+            categoryTitle: "Μάσκες & Conditioners Επανόρθωσης",
+            products: [
+              {
+                id: "hc-sec-10",
+                name: "Klorane Μάσκα με Βούτυρο Cupuacu για Ξηρά & Ταλαιπωρημένα Μαλλιά 150ml",
                 brand: "Klorane",
                 price: 12.5,
                 originalPrice: 16.0,
-                image:
-                  "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80",
+                image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-11",
+                name: "Apivita Keratin Repair Conditioner Επανόρθωσης 150ml",
+                brand: "Apivita",
+                price: 11.9,
+                originalPrice: 15.5,
+                image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+          {
+            categoryTitle: "Έλαια & Οροί Θερμοπροστασίας",
+            products: [
+              {
+                id: "hc-sec-12",
+                name: "Phyto Phytokeratine Serum Θερμοπροστασίας & Επανόρθωσης 100ml",
+                brand: "Phyto",
+                price: 17.5,
+                originalPrice: 23.0,
+                image: "https://images.unsplash.com/photo-1608248597359-20f5a7a9beff?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-13",
+                name: "Rene Furterer 5 Sens Έλαιο Υπέρτατης Λάμψης & Θρέψης 100ml",
+                brand: "Rene Furterer",
+                price: 26.5,
+                originalPrice: 34.0,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "oily-frequent-section",
+        title: "4. Λιπαρότητα & Ήπιο Καθημερινό Λούσιμο",
+        image: "/categories/gia-ta-mallia-banner-560x1000-1.webp",
+        intro:
+          "Εξισορροπητικά σαμπουάν με τσουκνίδα και πρόπολη για ρύθμιση του σμήγματος, σε συνδυασμό με εξαιρετικά ήπιες συνθέσεις βρώμης για όσους λούζονται καθημερινά.",
+        productHeading: "Προϊόντα για Λιπαρά & Καθημερινά Μαλλιά",
+        productGroups: [
+          {
+            categoryTitle: "Σμηγματορρυθμιστικά & Ήπια Σαμπουάν",
+            products: [
+              {
+                id: "hc-sec-14",
+                name: "Klorane Σαμπουάν με Εκχύλισμα Τσουκνίδας για Λιπαρά Μαλλιά 400ml",
+                brand: "Klorane",
+                price: 12.8,
+                originalPrice: 16.5,
+                image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-15",
+                name: "Apivita Σαμπουάν Εξισορρόπησης Λιπαρότητας με Πρόπολη & Δεντρολίβανο 250ml",
+                brand: "Apivita",
+                price: 11.2,
+                originalPrice: 14.5,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80",
+              },
+              {
+                id: "hc-sec-16",
+                name: "Klorane Εξαιρετικά Απαλό Σαμπουάν με Γάλα Βρώμης 400ml",
+                brand: "Klorane",
+                price: 12.5,
+                originalPrice: 15.9,
+                image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80",
               },
             ],
           },
         ],
       },
     ],
+
+    // 7. FAQs για τα Μαλλιά (Schema.org ready)
+    faqs: [
+      {
+        question: "Πόσες τρίχες είναι φυσιολογικό να χάνουμε καθημερινά;",
+        answer:
+          "Η απώλεια 50 έως 100 τριχών την ημέρα θεωρείται απόλυτα φυσιολογική και αποτελεί μέρος του τελογενούς σταδίου αναγέννησης των μαλλιών. Εάν παρατηρείτε απώλεια άνω των 150 τριχών, ορατά κενά στο τριχωτό ή έντονη τριχόπτωση που επιμένει για πάνω από 2 μήνες, συνιστάται η έναρξη ολοκληρωμένου πρωτοκόλλου τριχόπτωσης και ιατρική αξιολόγηση.",
+      },
+      {
+        question: "Γιατί χρειάζονται 2 λουσίματα αντί για ένα;",
+        answer:
+          "Το 1ο χέρι λειτουργεί καθαριστικά, απομακρύνοντας το συσσωρευμένο σμήγμα, τη σκόνη και τα υπολείμματα styling. Το 2ο χέρι επιτρέπει στα εξειδικευμένα ενεργά συστατικά (όπως Aminexil, Selenium Disulfide ή κερατίνη) να έρθουν σε άμεση επαφή με το καθαρό τριχωτό και να απορροφηθούν. Για μέγιστη απόδοση, αφήστε το 2ο χέρι να δράσει για 1-2 λεπτά.",
+      },
+      {
+        question: "Ποια είναι η βασική διαφορά ανάμεσα σε ξηροδερμία και λιπαρή πιτυρίδα;",
+        answer:
+          "Στην ξηροδερμία οι νιφάδες είναι μικρές, λευκές και ξηρές, πέφτοντας εύκολα στους ώμους, ενώ το κεφάλι έχει αίσθηση τραβήγματος. Στη λιπαρή πιτυρίδα, οι νιφάδες είναι μεγαλύτερες, παχιές, κιτρινωπές και προσκολλώνται στο τριχωτό λόγω του μύκητα Malassezia και της υπερβολικής έκκρισης σμήγματος. Η ξηροδερμία απαιτεί ενυδάτωση, ενώ η πιτυρίδα αντιμυκητιασική θεραπεία.",
+      },
+      {
+        question: "Πόσο καιρό πρέπει να παίρνω συμπλήρωμα διατροφής για να δω αποτέλεσμα στην τριχόπτωση;",
+        answer:
+          "Ο κύκλος ζωής της τρίχας διαρκεί μήνες. Για να παρατηρηθεί ουσιαστική μείωση της τριχόπτωσης και ανάπτυξη νέων τριχών, τα συμπληρώματα με κυστίνη, βιοτίνη και ψευδάργυρο πρέπει να λαμβάνονται καθημερινά για τουλάχιστον 3 συνεχόμενους μήνες (12 εβδομάδες).",
+      },
+      {
+        question: "Μπορώ να λούζομαι καθημερινά αν έχω λιπαρά μαλλιά;",
+        answer:
+          "Ναι, αρκεί να χρησιμοποιείτε ένα εξαιρετικά ήπιο σαμπουάν χωρίς σκληρά θειικά άλατα (π.χ. με γάλα βρώμης). Χρησιμοποιείτε το σμηγματορρυθμιστικό σαμπουάν (π.χ. τσουκνίδα) μόνο 2 φορές την εβδομάδα. Το επιθετικό καθημερινό λούσιμο με ισχυρά καθαριστικά προκαλεί αντιδραστική υπερπαραγωγή σμήγματος.",
+      },
+    ],
+
+    // 8. Lead Generation / Pharmacist Consultation Call-to-Action
+    pharmacistCta: {
+      badge: "Δωρεάν Συμβουλή Φαρμακοποιού",
+      title: "Αντιμετωπίζεις επίμονη τριχόπτωση ή πρόβλημα στο τριχωτό;",
+      subtitle:
+        "Οι εξειδικευμένοι φαρμακοποιοί του ProPharmacy είναι διαθέσιμοι να αξιολογήσουν τον τύπο της τριχόπτωσης ή της πιτυρίδας σου και να σου προτείνουν την ακριβή συνδυαστική αγωγή.",
+      phone: "210 1234567",
+      buttonText: "Κάλεσε τον Φαρμακοποιό (Δωρεάν)",
+      note: "Δευτέρα – Παρασκευή 09:00 – 21:00 · Σάββατο 09:00 – 15:00",
+    },
+
+    // 9. Medical Disclaimer
+    disclaimer:
+      "ΙΑΤΡΙΚΗ ΕΠΙΣΗΜΑΝΣΗ: Οι πληροφορίες και οι προτάσεις του παρόντος οδηγού έχουν ενημερωτικό χαρακτήρα. Σε περιπτώσεις ξαφνικής κυκλικής απώλειας μαλλιών (γυροειδής αλωπεκία), έντονου πόνου, ελκών ή φλεγμονής με πύον στο τριχωτό, συνιστάται άμεση κλινική εκτίμηση από δερματολόγο.",
   },
 };
 

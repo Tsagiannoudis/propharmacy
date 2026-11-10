@@ -162,3 +162,4 @@ export const MobileCategoryAccordion: React.FC<MobileCategoryAccordionProps> = (
     </div>
   );
 };
+

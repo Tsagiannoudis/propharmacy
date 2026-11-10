@@ -44,16 +44,18 @@ export function useShopFilters(products: Product[], categoryTree: CategoryTreeNo
   const urlCategory = searchParams.get("category");
   const urlBrand = searchParams.get("brand");
   const urlTag = searchParams.get("tag");
+  const urlSearch = searchParams.get("q") || searchParams.get("search");
 
   const [tag, setTag] = useState<string | null>(null);
   const [brands, setBrands] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    if (urlSearch) setQuery(urlSearch);
     setCategories(urlCategory ? new Set([urlCategory]) : new Set());
     setBrands(urlBrand ? new Set([urlBrand]) : new Set());
     setTag(urlTag || null);
     setVisible(PAGE_SIZE);
-  }, [urlCategory, urlBrand, urlTag]);
+  }, [urlCategory, urlBrand, urlTag, urlSearch]);
   const [brandQuery, setBrandQuery] = useState("");
   const [priceRangeId, setPriceRangeId] = useState("all");
   const [inStockOnly, setInStockOnly] = useState(false);

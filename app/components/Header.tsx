@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
 import {
   Search,
@@ -17,6 +18,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { CategoryMegaMenu } from "./CategoryMegaMenu";
+import { MobileCategoryAccordion } from "./MobileCategoryAccordion";
 
 import { decodeHtml } from "@/lib/formatters";
 
@@ -51,6 +53,7 @@ const announcements = [
 ];
 
 export const Header: React.FC<HeaderProps> = () => {
+  const router = useRouter();
   const { cart } = useCart();
   const cartCount = cart?.items_count ?? 0;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -129,7 +132,12 @@ export const Header: React.FC<HeaderProps> = () => {
 
           {/* Search */}
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchQuery.trim()) {
+                router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+              }
+            }}
             className="hidden md:flex flex-1 max-w-2xl items-center rounded-full bg-ink-50 border border-ink-100 focus-within:bg-white focus-within:border-brand-400 focus-within:shadow-glow transition-all"
           >
             <CategoryMegaMenu />
@@ -248,42 +256,62 @@ export const Header: React.FC<HeaderProps> = () => {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden glass shadow-soft border-t border-ink-100 animate-fade-up">
-          <div className="container-page py-4 space-y-3">
-            <div className="flex items-center rounded-full bg-ink-50 border border-ink-100 px-4">
-              <Search className="w-4 h-4 text-ink-400" />
+        <div className="lg:hidden bg-surface/98 backdrop-blur-md shadow-lift border-t border-ink-100 animate-fade-up max-h-[85vh] overflow-y-auto">
+          <div className="container-page py-4 space-y-4">
+            {/* Search Bar */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+                  setMobileMenuOpen(false);
+                }
+              }}
+              className="flex items-center rounded-full bg-ink-50 border border-ink-100 px-3.5 focus-within:bg-white focus-within:border-brand-400 focus-within:shadow-glow transition-all"
+            >
+              <Search className="w-4 h-4 text-ink-400 shrink-0" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Αναζήτηση προϊόντων…"
-                className="flex-1 bg-transparent px-3 py-3 text-sm focus:outline-none"
+                className="flex-1 bg-transparent px-3 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none"
               />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {tags.length > 0
-                ? tags.map((tag) => (
+              <button
+                type="submit"
+                aria-label="Αναζήτηση"
+                className="w-8 h-8 rounded-full bg-brand-600 hover:bg-brand-700 text-white grid place-items-center shrink-0 my-1 transition-colors"
+              >
+                <Search className="w-3.5 h-3.5" />
+              </button>
+            </form>
+
+            {/* Category Accordion */}
+            <MobileCategoryAccordion onClose={() => setMobileMenuOpen(false)} />
+
+            {/* Popular Tags / Shortcuts */}
+            {tags.length > 0 && (
+              <div className="pt-2 border-t border-ink-100">
+                <span className="text-[11px] font-bold text-ink-400 uppercase tracking-wider block mb-2 px-1">
+                  Δημοφιλείς Ετικέτες
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {tags.slice(0, 8).map((tag) => (
                     <Link
                       key={tag.id}
                       href={`/shop?tag=${encodeURIComponent(tag.slug)}`}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white border border-ink-100 text-sm font-medium text-ink-700 hover:border-brand-300 hover:text-brand-700"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-ink-100 text-xs font-semibold text-ink-700 hover:border-brand-300 hover:text-brand-700 shadow-2xs"
                     >
-                      <span className="truncate">{decodeHtml(tag.name)}</span>
-                      <span className="text-[10px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded-full ml-1">
+                      <span>{decodeHtml(tag.name)}</span>
+                      <span className="text-[10px] text-brand-600 font-bold bg-brand-50 px-1.5 py-0.5 rounded-full">
                         {tag.count}
                       </span>
                     </Link>
-                  ))
-                : defaultNavItems.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 rounded-2xl bg-white border border-ink-100 text-sm font-medium text-ink-700 hover:border-brand-300 hover:text-brand-700"
-                    >
-                      {item.label}
-                    </Link>
                   ))}
-            </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
